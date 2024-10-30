@@ -16,10 +16,6 @@ public class MedVet extends Usuario {
 
     private String especialidade;
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "medVets")
-    private Set<Atendimento> atendimentos;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

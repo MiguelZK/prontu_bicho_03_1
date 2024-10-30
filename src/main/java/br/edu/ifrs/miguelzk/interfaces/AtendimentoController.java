@@ -1,4 +1,4 @@
-package br.edu.ifrs.miguelzk.presentation.controller;
+package br.edu.ifrs.miguelzk.interfaces;
 
 import jakarta.annotation.security.RolesAllowed;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;

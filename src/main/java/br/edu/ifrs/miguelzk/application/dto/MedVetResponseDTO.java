@@ -9,5 +9,4 @@ import lombok.Data;
 public class MedVetResponseDTO {
   private int crmv;
   private String especialidade;
-  private Set<Atendimento> atendimentos;
 }

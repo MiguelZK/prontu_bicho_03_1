@@ -1,4 +1,4 @@
-package br.edu.ifrs.miguelzk.configuration;
+package br.edu.ifrs.miguelzk.infrastructure.config;
 
 import org.modelmapper.ModelMapper;
 import jakarta.enterprise.context.ApplicationScoped;

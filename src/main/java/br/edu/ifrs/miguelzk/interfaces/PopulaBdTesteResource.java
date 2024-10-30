@@ -1,22 +1,22 @@
-package br.edu.ifrs.miguelzk.presentation.controller;
+package br.edu.ifrs.miguelzk.interfaces;
 
-import br.edu.ifrs.miguelzk.application.DataLoader;
+import br.edu.ifrs.miguelzk.infrastructure.persistence.DataLoader;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/teste")
-public class TesteResource {
+@Path("/popbdteste")
+public class PopulaBdTesteResource {
 
     @Inject
     DataLoader dataLoader;
 
-    @POST
+    @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Transactional
-    public String testarLoader() {
+    public String popBDLoader() {
         dataLoader.loadData();
-        return "Teste realizado";
+        return "Teste realizado, banco de dados populado";
     }
 }

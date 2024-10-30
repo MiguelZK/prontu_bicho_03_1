@@ -1,4 +1,4 @@
-package br.edu.ifrs.miguelzk.domain.repository.impl;
+package br.edu.ifrs.miguelzk.infrastructure.persistence;
 
 import java.util.List;
 

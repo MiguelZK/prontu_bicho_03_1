@@ -1,8 +1,6 @@
-package br.edu.ifrs.miguelzk.presentation.controller;
+package br.edu.ifrs.miguelzk.interfaces;
 
-import br.edu.ifrs.miguelzk.application.dto.AnimalRequestDTO;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import br.edu.ifrs.miguelzk.application.dto.UsuarioRequestDTO;
@@ -27,10 +25,11 @@ public class UsuarioController {
   }
 
   @PUT
+  @Path("/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateUsuario(@RequestBody UsuarioRequestDTO request) {
-    return Response.ok().entity(usuarioService.updateUsuario(request)).build();
+  public Response updateUsuario(@PathParam("id") Long id, @RequestBody UsuarioRequestDTO request) {
+    return Response.ok().entity(usuarioService.updateUsuario(id, request)).build();
   }
 
   @GET
@@ -55,16 +54,17 @@ public class UsuarioController {
   }
 
   @GET
-  @Path("/{nomeUsuario}")
+  @Path("/buscanome")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response findUsuarioByName(@PathParam("nomeUsuario") String nomeUsuario) {
+  public Response findUsuarioByName(@QueryParam("nomeUsuario") String nomeUsuario) {
     return Response.ok().entity(usuarioService.findUsuarioByName(nomeUsuario)).build();
   }
 
   @DELETE
+  @Path("/{id}")
 //  @RolesAllowed("admin")
   @PermitAll
-  public Response deleteUsuarioById(Long id) {
+  public Response deleteUsuarioById(@PathParam("id") Long id) {
     try {
       usuarioService.deleteUsuarioById(id);
       return Response.ok().build();

@@ -1,4 +1,4 @@
-package br.edu.ifrs.miguelzk.domain.repository.impl;
+package br.edu.ifrs.miguelzk.infrastructure.persistence;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository, PanacheReposito
 
   @Override
   public List<Usuario> findUsuarioByName(String nomeUsuario) {
-    return find("nome like ?1", "%" + nomeUsuario + "%").list();
+    return find("userName like ?1", "%" + nomeUsuario + "%").list();
   }
 
   @Override

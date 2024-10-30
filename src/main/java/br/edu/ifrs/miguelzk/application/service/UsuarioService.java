@@ -35,8 +35,8 @@ public class UsuarioService {
   }
 
   @Transactional
-  public UsuarioResponseDTO updateUsuario(UsuarioRequestDTO request) {
-    return updateUsuarioUseCase.execute(request);
+  public UsuarioResponseDTO updateUsuario(Long id, UsuarioRequestDTO request) {
+    return updateUsuarioUseCase.execute(id, request);
   }
 
   public List<UsuarioResponseDTO> findUsuarioAll() {

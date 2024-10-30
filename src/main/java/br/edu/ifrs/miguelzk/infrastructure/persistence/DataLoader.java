@@ -1,4 +1,4 @@
-package br.edu.ifrs.miguelzk.application;
+package br.edu.ifrs.miguelzk.infrastructure.persistence;
 
 import br.edu.ifrs.miguelzk.domain.entities.Usuario;
 import br.edu.ifrs.miguelzk.domain.entities.Animal;
@@ -6,7 +6,6 @@ import br.edu.ifrs.miguelzk.domain.repository.UsuarioRepository;
 import br.edu.ifrs.miguelzk.domain.repository.AnimalRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 @ApplicationScoped

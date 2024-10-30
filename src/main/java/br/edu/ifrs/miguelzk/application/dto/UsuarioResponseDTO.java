@@ -15,11 +15,11 @@ public class UsuarioResponseDTO {
     private String userName;
     private String role;
     private String nomeCompleto;
-    private Cpf cpf;
+    /*private Cpf cpf;
     private Date dataNascimento;
     private Date dataCadastro;
     private Set<Telefone> telefones;
     private Set<Endereco> enderecos;
     private Set<String> emails;
-    private Set<Animal> animais;
+    private Set<Animal> animais;*/
 }

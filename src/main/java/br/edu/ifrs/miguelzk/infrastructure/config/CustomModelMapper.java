@@ -1,4 +1,4 @@
-package br.edu.ifrs.miguelzk.configuration;
+package br.edu.ifrs.miguelzk.infrastructure.config;
 
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;

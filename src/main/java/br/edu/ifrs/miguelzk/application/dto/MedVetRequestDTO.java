@@ -14,5 +14,4 @@ public class MedVetRequestDTO {
 //    private DateJavaType dataCadastro;
     private int crmv;
     private String especialidade;
-    private Set<Atendimento> atendimentos;
 }
