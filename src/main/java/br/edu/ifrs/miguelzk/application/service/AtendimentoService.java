@@ -10,6 +10,7 @@ import br.edu.ifrs.miguelzk.application.usecase.FindAtendimentoUseCase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class AtendimentoService {
@@ -32,7 +33,11 @@ public class AtendimentoService {
   }
 
   public AtendimentoResponseDTO findAtendimentoById(Long id) {
-    return findAtendimentoUseCase.execute(id);
+    try {
+      return findAtendimentoUseCase.execute(id);
+    } catch (NotFoundException e) {
+      throw new NotFoundException("Atendimento não encontrado");
+    }
   }
 
   public List<AtendimentoResponseDTO> findAtendimentoAll(){

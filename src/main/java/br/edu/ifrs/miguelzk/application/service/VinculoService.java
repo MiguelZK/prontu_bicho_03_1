@@ -9,6 +9,8 @@ import br.edu.ifrs.miguelzk.application.usecase.UpdateVinculoUseCase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
+import org.eclipse.microprofile.openapi.annotations.links.Link;
 
 import java.util.List;
 
@@ -19,6 +21,11 @@ public class VinculoService {
   private final FindVinculoUseCase findVinculoUseCase;
   private final DeleteVinculoUseCase deleteVinculoUseCase;
   private final UpdateVinculoUseCase updateVinculoUseCase;
+
+  @Inject
+  private UsuarioService usuarioService;
+
+  @Inject AnimalService animalService;
 
   @Inject
   public VinculoService(CreateVinculoUseCase createVinculoUseCase, FindVinculoUseCase findVinculoUseCase
@@ -35,8 +42,8 @@ public class VinculoService {
   }
 
   @Transactional
-  public VinculoResponseDTO updateVinculo(VinculoRequestDTO request) {
-    return updateVinculoUseCase.execute(request);
+  public VinculoResponseDTO updateVinculo(Long id, VinculoRequestDTO request) {
+    return updateVinculoUseCase.execute(id, request);
   }
 
   public List<VinculoResponseDTO> findVinculoAll() {
@@ -44,7 +51,11 @@ public class VinculoService {
   }
 
   public VinculoResponseDTO findVinculoById(Long id) {
-    return findVinculoUseCase.execute(id);
+    try {
+      return findVinculoUseCase.execute(id);
+    } catch (NotFoundException e) {
+      throw new NotFoundException(e.getMessage());
+    }
   }
 
   public List<VinculoResponseDTO> findVinculoByName(String nomeVinculo) {

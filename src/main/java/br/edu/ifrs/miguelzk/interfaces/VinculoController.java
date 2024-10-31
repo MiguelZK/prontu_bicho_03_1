@@ -25,10 +25,11 @@ public class VinculoController {
   }
 
   @PUT
+  @Path("/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateVinculo(@RequestBody VinculoRequestDTO request) {
-    return Response.ok().entity(vinculoService.updateVinculo(request)).build();
+  public Response updateVinculo(@PathParam("id") Long id, @RequestBody VinculoRequestDTO request) {
+    return Response.ok().entity(vinculoService.updateVinculo(id, request)).build();
   }
 
   @GET

@@ -10,6 +10,7 @@ import br.edu.ifrs.miguelzk.application.usecase.UpdateAnimalUseCase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class AnimalService {
@@ -46,7 +47,11 @@ public class AnimalService {
   }
 
   public AnimalResponseDTO findAnimalById(Long id) {
-    return findAnimalUseCase.execute(id);
+    try {
+      return findAnimalUseCase.execute(id);
+    } catch (NotFoundException e) {
+      throw new NotFoundException("Animal não encontrado");
+    }
   }
 
   public List<AnimalResponseDTO> findAnimalByName(String nomeAnimal) {

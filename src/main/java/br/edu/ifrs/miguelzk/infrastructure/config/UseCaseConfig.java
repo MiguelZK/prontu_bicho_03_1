@@ -70,8 +70,11 @@ public class UseCaseConfig {
     }
 
     @Produces
-    public CreateVinculoUseCase createVinculoUseCase(VinculoRepository vinculoRepository, ModelMapper modelMapper) {
-        return new CreateVinculoUseCaseImpl(vinculoRepository, modelMapper);
+    public CreateVinculoUseCase createVinculoUseCase(VinculoRepository vinculoRepository,
+                                                     AnimalRepository animalRepository,
+                                                     UsuarioRepository usuarioRepository,
+                                                     ModelMapper modelMapper) {
+        return new CreateVinculoUseCaseImpl(vinculoRepository, animalRepository, usuarioRepository, modelMapper);
     }
 
     @Produces

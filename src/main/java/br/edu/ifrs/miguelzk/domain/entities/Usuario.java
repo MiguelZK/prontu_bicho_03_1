@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.security.jpa.Password;
@@ -53,6 +55,7 @@ public class Usuario extends PanacheEntityBase {
     private Set<String> emails;*/
 
     @ToString.Exclude
+    @JsonBackReference
     @ManyToMany(mappedBy = "usuarios")
     private Set<Animal> animais;
 
@@ -62,7 +65,13 @@ public class Usuario extends PanacheEntityBase {
         this.password = password;
         this.role = role;
         this.animais = new HashSet<>();
+        this.vinculos = new HashSet<>();
     }
+
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "usuario")
+    private Set<Vinculo> vinculos;
 
     public Usuario() {
     }

@@ -1,3 +1,4 @@
+/*
 package br.edu.ifrs.miguelzk;
 
 import jakarta.ws.rs.GET;
@@ -14,3 +15,4 @@ public class ExampleResource {
         return "Hello from Quarkus REST";
     }
 }
+*/

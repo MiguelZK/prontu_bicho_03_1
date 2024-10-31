@@ -11,6 +11,7 @@ import br.edu.ifrs.miguelzk.application.usecase.UpdateUsuarioUseCase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class UsuarioService {
@@ -44,15 +45,26 @@ public class UsuarioService {
   }
 
   public UsuarioResponseDTO findUsuarioById(Long id) {
-    return findUsuarioUseCase.execute(id);
+    try {
+      return findUsuarioUseCase.execute(id);
+    } catch (NotFoundException e) {
+      throw new NotFoundException("Usuário não encontrado");
+    }
   }
 
   public List<UsuarioResponseDTO> findUsuarioByName(String nomeUsuario) {
     return findUsuarioUseCase.execute(nomeUsuario);
   }
 
+  @Transactional
   public void deleteUsuarioById(Long id) {
-    deleteUsuarioUseCase.execute(id);
+    try {
+      deleteUsuarioUseCase.execute(id);
+    } catch (NotFoundException e) {
+      throw new NotFoundException("Usuário não encontrado");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
 }

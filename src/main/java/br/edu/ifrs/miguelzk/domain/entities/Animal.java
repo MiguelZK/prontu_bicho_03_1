@@ -1,5 +1,6 @@
 package br.edu.ifrs.miguelzk.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
@@ -66,6 +67,7 @@ public class Animal extends PanacheEntityBase {
     private PorteCachorro porteCachorro;
 
     @ToString.Exclude
+    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.PERSIST, targetEntity = Usuario.class)
     @JoinTable( name="animal_usuario",
             joinColumns={ @JoinColumn(name="idAnimal")},
@@ -73,14 +75,21 @@ public class Animal extends PanacheEntityBase {
     private Set<Usuario> usuarios;
 
     @ToString.Exclude
+    @JsonManagedReference
     @OneToMany(mappedBy = "animal")
     private Set<Atendimento> atendimentos;
+
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "animal")
+    private Set<Vinculo> vinculos;
 
     public Animal(String nomeAnimal, String porteCachorro) {
         this.nomeAnimal = nomeAnimal;
         this.porteCachorro = PorteCachorro.valueOf(porteCachorro);
         this.usuarios = new HashSet<>();
         this.atendimentos = new HashSet<>();
+        this.vinculos = new HashSet<>();
     }
 
     public Animal() {}

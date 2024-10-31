@@ -1,3 +1,4 @@
+/*
 package br.edu.ifrs.miguelzk.presentation.controller;
 
 import br.edu.ifrs.miguelzk.application.dto.UsuarioRequestDTO;
@@ -21,3 +22,4 @@ public class UsuarioMeController {
     return securityContext.getUserPrincipal().getName();
   }
 }
+*/

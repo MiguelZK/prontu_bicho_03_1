@@ -35,11 +35,7 @@ public class UsuarioController {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response findAll() {
-    try {
       return Response.ok().entity(usuarioService.findUsuarioAll()).build();
-    } catch (Exception e) {
-      return Response.serverError().build();
-    }
   }
 
   @GET
@@ -57,7 +53,11 @@ public class UsuarioController {
   @Path("/buscanome")
   @Produces(MediaType.APPLICATION_JSON)
   public Response findUsuarioByName(@QueryParam("nomeUsuario") String nomeUsuario) {
-    return Response.ok().entity(usuarioService.findUsuarioByName(nomeUsuario)).build();
+    try {
+      return Response.ok().entity(usuarioService.findUsuarioByName(nomeUsuario)).build();
+    } catch (NotFoundException e) {
+      return Response.status(Response.Status.NOT_FOUND).build();
+    }
   }
 
   @DELETE

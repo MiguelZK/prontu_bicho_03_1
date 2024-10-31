@@ -10,14 +10,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-public class VinculoResponseDTO extends PanacheEntity {
+public class VinculoResponseDTO {
 
+    private Long id;
     private String nomeAnimal;
 //    private Date inicioVinculo;
 //    private Date fimVinculo;
-//    private Set<Animal> animais;
 
-    private Animal animal;
-    private Usuario usuario;
+    //    private Animal animal;
+//    private Usuario usuario;
+    private Long idAnimal;
+    private Long idUsuario;
 
 }
