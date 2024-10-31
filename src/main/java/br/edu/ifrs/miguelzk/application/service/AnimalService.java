@@ -1,6 +1,8 @@
 package br.edu.ifrs.miguelzk.application.service;
 
 import java.util.List;
+
+import br.edu.ifrs.miguelzk.application.dto.AnimalComColecoesResponseDTO;
 import br.edu.ifrs.miguelzk.application.dto.AnimalRequestDTO;
 import br.edu.ifrs.miguelzk.application.dto.AnimalResponseDTO;
 import br.edu.ifrs.miguelzk.application.usecase.CreateAnimalUseCase;
@@ -38,8 +40,8 @@ public class AnimalService {
   }
 
   @Transactional
-  public AnimalResponseDTO updateAnimal(AnimalRequestDTO request) {
-    return updateAnimalUseCase.execute(request);
+  public AnimalResponseDTO updateAnimal(Long id, AnimalRequestDTO request) {
+    return updateAnimalUseCase.execute(id, request);
   }
 
   public List<AnimalResponseDTO> findAnimalAll(){
@@ -49,6 +51,14 @@ public class AnimalService {
   public AnimalResponseDTO findAnimalById(Long id) {
     try {
       return findAnimalUseCase.execute(id);
+    } catch (NotFoundException e) {
+      throw new NotFoundException("Animal não encontrado");
+    }
+  }
+
+  public AnimalComColecoesResponseDTO findAnimalComColecoesById(Long id) {
+    try {
+      return findAnimalUseCase.findAnimalComColecoesExecute(id);
     } catch (NotFoundException e) {
       throw new NotFoundException("Animal não encontrado");
     }

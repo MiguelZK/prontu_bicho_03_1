@@ -3,6 +3,7 @@ package br.edu.ifrs.miguelzk.application.usecase.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifrs.miguelzk.application.dto.AnimalComColecoesResponseDTO;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.modelmapper.ModelMapper;
@@ -31,6 +32,20 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
         }
 
         return listAnimalResponseDTO;
+    }
+
+    @Override
+    public AnimalComColecoesResponseDTO findAnimalComColecoesExecute(Long id) {
+        try {
+            Animal animal = animalRepository.findAnimalById(id);
+
+            if (animal == null) {
+                throw new NotFoundException("Animal não encontrado");
+            }
+            return modelMapper.map(animal, AnimalComColecoesResponseDTO.class);
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Animal não encontrado");
+        }
     }
 
     @Override

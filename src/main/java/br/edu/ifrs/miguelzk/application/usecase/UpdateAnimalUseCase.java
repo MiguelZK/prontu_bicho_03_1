@@ -4,5 +4,5 @@ import br.edu.ifrs.miguelzk.application.dto.AnimalRequestDTO;
 import br.edu.ifrs.miguelzk.application.dto.AnimalResponseDTO;
 
 public interface UpdateAnimalUseCase {
-    AnimalResponseDTO execute(AnimalRequestDTO dto);
+    AnimalResponseDTO execute(Long id, AnimalRequestDTO dto);
 }

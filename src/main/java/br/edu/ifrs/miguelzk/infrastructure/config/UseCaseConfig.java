@@ -14,6 +14,7 @@ import jakarta.enterprise.inject.Produces;
 @ApplicationScoped
 public class UseCaseConfig {
 
+    // BEANS DE ANIMAL
     @Produces
     public CreateAnimalUseCase createAnimalUseCase(AnimalRepository animalRepository, ModelMapper modelMapper) {
         return new CreateAnimalUseCaseImpl(animalRepository, modelMapper);
@@ -34,6 +35,7 @@ public class UseCaseConfig {
         return new DeleteAnimalUseCaseImpl(animalRepository);
     }
 
+    // BEANS DE USUARIO
     @Produces
     public CreateUsuarioUseCase createUsuarioUseCase(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
         return new CreateUsuarioUseCaseImpl(usuarioRepository, modelMapper);
@@ -54,6 +56,7 @@ public class UseCaseConfig {
         return new DeleteUsuarioUseCaseImpl(usuarioRepository);
     }
 
+    // BEANS DE ATENDIMENTO
     @Produces
     public CreateAtendimentoUseCase createAtendimentoUseCase(AtendimentoRepository atendimentoRepository, UsuarioRepository usuarioRepository, AnimalRepository animalRepository, ModelMapper modelMapper) {
         return new CreateAtendimentoUseCaseImpl(atendimentoRepository, usuarioRepository, animalRepository, modelMapper);
@@ -69,6 +72,7 @@ public class UseCaseConfig {
         return new DeleteAtendimentoUseCaseImpl(atendimentoRepository);
     }
 
+    // BEANS DE VINCULOS
     @Produces
     public CreateVinculoUseCase createVinculoUseCase(VinculoRepository vinculoRepository,
                                                      AnimalRepository animalRepository,

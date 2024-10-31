@@ -25,12 +25,13 @@ public class AnimalController {
   }
 
   @PUT
+  @Path("/{id}")
 //  @RolesAllowed("admin")
   @PermitAll
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateAnimal(@RequestBody AnimalRequestDTO request) {
-    return Response.ok().entity(animalService.updateAnimal(request)).build();
+  public Response updateAnimal(@PathParam("id") Long id, @RequestBody AnimalRequestDTO request) {
+    return Response.ok().entity(animalService.updateAnimal(id, request)).build();
   }
 
   @GET
@@ -51,6 +52,13 @@ public class AnimalController {
   @Produces(MediaType.APPLICATION_JSON)
   public Response findAnimalById(@PathParam("id") Long id) {
     return Response.ok().entity(animalService.findAnimalById(id)).build();
+  }
+
+  @GET
+  @Path("/comcolecoes/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response findAnimalComColecoesById(@PathParam("id") Long id) {
+    return Response.ok().entity(animalService.findAnimalComColecoesById(id)).build();
   }
 
   @DELETE
