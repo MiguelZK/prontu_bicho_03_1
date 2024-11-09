@@ -21,7 +21,7 @@ public class AnimalController {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createAnimal(@RequestBody AnimalRequestDTO request) {
-    return Response.ok().entity(animalService.createAnimal(request)).build();
+    return Response.ok().entity(animalService.create(request)).build();
   }
 
   @PUT

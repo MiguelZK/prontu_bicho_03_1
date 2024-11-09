@@ -72,17 +72,17 @@ public class Animal extends PanacheEntityBase {
     @JoinTable( name="animal_usuario",
             joinColumns={ @JoinColumn(name="idAnimal")},
             inverseJoinColumns={@JoinColumn(name="idUsuario")})
-    private Set<Usuario> usuarios;
+    private Set<Usuario> usuarios = new HashSet<>();
 
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "animal")
-    private Set<Atendimento> atendimentos;
+    private Set<Atendimento> atendimentos = new HashSet<>();
 
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "animal")
-    private Set<Vinculo> vinculos;
+    private Set<Vinculo> vinculos = new HashSet<>();
 
     public Animal(String nomeAnimal, String porteCachorro) {
         this.nomeAnimal = nomeAnimal;

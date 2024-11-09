@@ -35,7 +35,7 @@ public class AnimalService {
   }
 
   @Transactional
-  public AnimalResponseDTO createAnimal(AnimalRequestDTO request) {
+  public AnimalResponseDTO create(AnimalRequestDTO request) {
     return createAnimalUseCase.execute(request);
   }
 

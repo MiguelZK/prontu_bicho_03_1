@@ -34,7 +34,7 @@ public class Usuario extends PanacheEntityBase {
     private String userName;
 
     //    @NotBlank(message = "Senha é obrigatória")
-//    @JsonIgnore
+    @JsonIgnore
     @Password
     private String password;
 
@@ -57,7 +57,7 @@ public class Usuario extends PanacheEntityBase {
     @ToString.Exclude
     @JsonBackReference
     @ManyToMany(mappedBy = "usuarios")
-    private Set<Animal> animais;
+    private Set<Animal> animais = new HashSet<>();
 
     public Usuario(String nomeCompleto, String userName, String password, String role) {
         this.nomeCompleto = nomeCompleto;
@@ -71,7 +71,7 @@ public class Usuario extends PanacheEntityBase {
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "usuario")
-    private Set<Vinculo> vinculos;
+    private Set<Vinculo> vinculos = new HashSet<>();
 
     public Usuario() {
     }
