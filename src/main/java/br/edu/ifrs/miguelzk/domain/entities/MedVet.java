@@ -2,10 +2,8 @@ package br.edu.ifrs.miguelzk.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Data

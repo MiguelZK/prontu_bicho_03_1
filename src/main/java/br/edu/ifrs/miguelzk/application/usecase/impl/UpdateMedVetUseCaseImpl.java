@@ -2,11 +2,8 @@ package br.edu.ifrs.miguelzk.application.usecase.impl;
 
 import br.edu.ifrs.miguelzk.application.dto.MedVetRequestDTO;
 import br.edu.ifrs.miguelzk.application.dto.MedVetResponseDTO;
-import br.edu.ifrs.miguelzk.application.dto.UsuarioRequestDTO;
-import br.edu.ifrs.miguelzk.application.dto.UsuarioResponseDTO;
 import br.edu.ifrs.miguelzk.application.usecase.UpdateMedVetUseCase;
 import br.edu.ifrs.miguelzk.domain.entities.MedVet;
-import br.edu.ifrs.miguelzk.domain.entities.Usuario;
 import br.edu.ifrs.miguelzk.domain.repository.MedVetRepository;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.EntityNotFoundException;
