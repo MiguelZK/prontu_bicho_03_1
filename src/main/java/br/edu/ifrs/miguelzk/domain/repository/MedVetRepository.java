@@ -8,7 +8,9 @@ public interface MedVetRepository {
     
     MedVet findMedVetByCrmv(Long crmv);
     List<MedVet> findMedVetAll();
+    List<MedVet> findMedVetByName(String userName);
     MedVet save(MedVet medVet);
+
     MedVet update(MedVet medVet);
     void deleteMedVetById(Long id);
 }

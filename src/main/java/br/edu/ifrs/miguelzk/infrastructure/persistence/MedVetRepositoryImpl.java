@@ -21,6 +21,11 @@ public class MedVetRepositoryImpl implements MedVetRepository, PanacheRepository
   }
 
   @Override
+  public List<MedVet> findMedVetByName(String userName) {
+    return find("userName like ?1", "%" + userName + "%").list();
+  }
+
+  @Override
   public MedVet update(MedVet medVet) {
     persist(medVet);
     return medVet;

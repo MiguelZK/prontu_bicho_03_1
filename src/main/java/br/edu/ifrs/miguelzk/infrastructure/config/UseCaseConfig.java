@@ -53,6 +53,27 @@ public class UseCaseConfig {
         return new DeleteUsuarioUseCaseImpl(usuarioRepository);
     }
 
+    // BEANS DE MEDVET
+    @Produces
+    public CreateMedVetUseCase createMedVetUseCase(MedVetRepository medVetRepository, ModelMapper modelMapper) {
+        return new CreateMedVetUseCaseImpl(medVetRepository, modelMapper);
+    }
+
+    @Produces
+    public FindMedVetUseCase findMedVetUseCase(MedVetRepository medVetRepository, ModelMapper modelMapper) {
+        return new FindMedVetUseCaseImpl(medVetRepository, modelMapper);
+    }
+
+    @Produces
+    public UpdateMedVetUseCase UpdateMedVetUseCase(MedVetRepository medVetRepository, ModelMapper modelMapper) {
+        return new UpdateMedVetUseCaseImpl(medVetRepository, modelMapper);
+    }
+
+    @Produces
+    public DeleteMedVetUseCase deleteMedVetUseCase(MedVetRepository medVetRepository) {
+        return new DeleteMedVetUseCaseImpl(medVetRepository);
+    }
+
     // BEANS DE ATENDIMENTO
     @Produces
     public CreateAtendimentoUseCase createAtendimentoUseCase(AtendimentoRepository atendimentoRepository

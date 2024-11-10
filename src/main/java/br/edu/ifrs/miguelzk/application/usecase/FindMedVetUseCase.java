@@ -1,15 +1,15 @@
 package br.edu.ifrs.miguelzk.application.usecase;
 
-import br.edu.ifrs.miguelzk.application.dto.UsuarioResponseDTO;
+import br.edu.ifrs.miguelzk.application.dto.MedVetResponseDTO;
 
 import java.util.List;
 
 public interface FindMedVetUseCase {
 
-  UsuarioResponseDTO execute(Long id);
+  MedVetResponseDTO execute(Long id);
 
-  List<UsuarioResponseDTO> execute(String nomeUsuario);
+  List<MedVetResponseDTO> execute(String userName);
 
-  List<UsuarioResponseDTO> execute();
+  List<MedVetResponseDTO> execute();
 
 }

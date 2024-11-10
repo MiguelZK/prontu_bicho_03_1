@@ -57,7 +57,7 @@ public class Atendimento extends PanacheEntityBase {
     @JsonManagedReference
     @JoinTable(name = "atendim_medvets",
             joinColumns = {@JoinColumn(name = "idAtendimento")},
-            inverseJoinColumns = {@JoinColumn(name = "cmrv")})
+            inverseJoinColumns = {@JoinColumn(name = "crmv")})
     private Set<MedVet> medVets = new HashSet<>();
 
     @Override

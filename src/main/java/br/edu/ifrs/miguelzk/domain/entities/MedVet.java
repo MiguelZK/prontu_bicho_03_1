@@ -12,7 +12,7 @@ import java.util.Set;
 public class MedVet extends Usuario {
 
     @Column(nullable = false)
-    private int cmrv;
+    private int crmv;
 
     private String especialidade;
 
@@ -22,11 +22,11 @@ public class MedVet extends Usuario {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MedVet medVet = (MedVet) o;
-        return cmrv == medVet.cmrv;
+        return crmv == medVet.crmv;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), cmrv);
+        return Objects.hash(super.hashCode(), crmv);
     }
 }
