@@ -26,7 +26,7 @@ public class AtendimentoResponseDTO {
 //  private List<DateJavaType> validacaoPelosTutores;
 
   private Animal animal;
-  private Set<Usuario> usuarios;
-  private Set<MedVet> medVets;
+//  private Set<Usuario> usuarios;
+//  private Set<MedVet> medVets;
 
 }

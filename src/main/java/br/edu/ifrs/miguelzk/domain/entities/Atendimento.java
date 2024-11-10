@@ -1,9 +1,11 @@
 package br.edu.ifrs.miguelzk.domain.entities;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
@@ -44,17 +46,19 @@ public class Atendimento extends PanacheEntityBase {
 
     @ToString.Exclude
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(name = "atendim_usuarios",
             joinColumns = {@JoinColumn(name = "idAtendimento")},
             inverseJoinColumns = {@JoinColumn(name = "idUsuario")})
-    private Set<Usuario> usuarios;
+    private Set<Usuario> usuarios = new HashSet<>();
 
     @ToString.Exclude
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(name = "atendim_medvets",
             joinColumns = {@JoinColumn(name = "idAtendimento")},
             inverseJoinColumns = {@JoinColumn(name = "cmrv")})
-    private Set<MedVet> medVets;
+    private Set<MedVet> medVets = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

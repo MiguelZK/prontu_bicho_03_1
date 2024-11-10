@@ -10,6 +10,12 @@ import lombok.Data;
 
 @Data
 public class MedVetRequestDTO {
+
+    // CAMPOS DE USUARIO - PARA NÃO USAR HERANÇA EM DTOS
+    private String userName;
+    private String password;
+    private String role;
+    private String nomeCompleto;
 //    private DateJavaType dataNascimento;
 //    private DateJavaType dataCadastro;
     private int crmv;

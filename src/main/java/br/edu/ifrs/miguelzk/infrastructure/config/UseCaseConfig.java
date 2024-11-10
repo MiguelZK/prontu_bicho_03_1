@@ -3,11 +3,8 @@ package br.edu.ifrs.miguelzk.infrastructure.config;
 
 import br.edu.ifrs.miguelzk.application.usecase.*;
 import br.edu.ifrs.miguelzk.application.usecase.impl.*;
-import br.edu.ifrs.miguelzk.domain.repository.VinculoRepository;
+import br.edu.ifrs.miguelzk.domain.repository.*;
 import org.modelmapper.ModelMapper;
-import br.edu.ifrs.miguelzk.domain.repository.UsuarioRepository;
-import br.edu.ifrs.miguelzk.domain.repository.AtendimentoRepository;
-import br.edu.ifrs.miguelzk.domain.repository.AnimalRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
@@ -58,8 +55,11 @@ public class UseCaseConfig {
 
     // BEANS DE ATENDIMENTO
     @Produces
-    public CreateAtendimentoUseCase createAtendimentoUseCase(AtendimentoRepository atendimentoRepository, UsuarioRepository usuarioRepository, AnimalRepository animalRepository, ModelMapper modelMapper) {
-        return new CreateAtendimentoUseCaseImpl(atendimentoRepository, usuarioRepository, animalRepository, modelMapper);
+    public CreateAtendimentoUseCase createAtendimentoUseCase(AtendimentoRepository atendimentoRepository
+            , UsuarioRepository usuarioRepository, AnimalRepository animalRepository, MedVetRepository medVetRepository
+            , ModelMapper modelMapper) {
+        return new CreateAtendimentoUseCaseImpl(atendimentoRepository, usuarioRepository, animalRepository
+                , medVetRepository, modelMapper);
     }
 
     @Produces
