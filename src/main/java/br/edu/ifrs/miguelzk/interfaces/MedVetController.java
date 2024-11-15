@@ -25,11 +25,11 @@ public class MedVetController {
   }
 
   @PUT
-  @Path("/{id}")
+  @Path("/{crmv}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateMedVet(@PathParam("id") Long id, @RequestBody MedVetRequestDTO request) {
-    return Response.ok().entity(medVetService.updateMedVet(id, request)).build();
+  public Response updateMedVet(@PathParam("crmv") Long crmv, @RequestBody MedVetRequestDTO request) {
+    return Response.ok().entity(medVetService.updateMedVet(crmv, request)).build();
   }
 
   @GET
@@ -50,23 +50,45 @@ public class MedVetController {
   }
 
   @GET
+  @Path("/crmv/{crmv}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response findByCrmv(@PathParam("crmv") Long crmv) {
+    try {
+      return Response.ok().entity(medVetService.findMedVetByCrmv(crmv)).build();
+    } catch (Exception e) {
+      return Response.serverError().build();
+    }
+  }
+
+  @GET
   @Path("/buscanome")
   @Produces(MediaType.APPLICATION_JSON)
   public Response findMedVetByName(@QueryParam("nomeMedVet") String nomeMedVet) {
     try {
-      return Response.ok().entity(medVetService.findMedVetByName(nomeMedVet)).build();
+      return Response.ok().entity(medVetService.findMedVetByNome(nomeMedVet)).build();
+    } catch (NotFoundException e) {
+      return Response.status(Response.Status.NOT_FOUND).build();
+    }
+  }
+
+  @GET
+  @Path("/buscausermedvet")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response findMedVetByUserName(@QueryParam("nomeMedVet") String userName) {
+    try {
+      return Response.ok().entity(medVetService.findMedVetByUserName(userName)).build();
     } catch (NotFoundException e) {
       return Response.status(Response.Status.NOT_FOUND).build();
     }
   }
 
   @DELETE
-  @Path("/{id}")
+  @Path("/{crmv}")
 //  @RolesAllowed("admin")
   @PermitAll
-  public Response deleteMedVetById(@PathParam("id") Long id) {
+  public Response deleteMedVetById(@PathParam("crmv") Long crmv) {
     try {
-      medVetService.deleteMedVetById(id);
+      medVetService.deleteMedVetByCrmv(crmv);
       return Response.ok().build();
     } catch (Exception e) {
       return Response.serverError().build();

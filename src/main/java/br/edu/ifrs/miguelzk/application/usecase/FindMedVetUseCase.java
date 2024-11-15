@@ -8,7 +8,11 @@ public interface FindMedVetUseCase {
 
   MedVetResponseDTO execute(Long id);
 
+  MedVetResponseDTO executeByCrmv(Long crmv);
+
   List<MedVetResponseDTO> execute(String userName);
+
+  List<MedVetResponseDTO> executeByNome(String nomeCompleto);
 
   List<MedVetResponseDTO> execute();
 

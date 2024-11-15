@@ -18,6 +18,6 @@ public class MedVetRequestDTO {
     private String nomeCompleto;
 //    private DateJavaType dataNascimento;
 //    private DateJavaType dataCadastro;
-    private int crmv;
+    private Long crmv;
     private String especialidade;
 }

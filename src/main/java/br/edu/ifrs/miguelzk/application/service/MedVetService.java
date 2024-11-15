@@ -36,8 +36,8 @@ public class MedVetService {
   }
 
   @Transactional
-  public MedVetResponseDTO updateMedVet(Long id, MedVetRequestDTO request) {
-    return updateMedVetUseCase.execute(id, request);
+  public MedVetResponseDTO updateMedVet(Long crmv, MedVetRequestDTO request) {
+    return updateMedVetUseCase.execute(crmv, request);
   }
 
   public List<MedVetResponseDTO> findMedVetAll() {
@@ -52,16 +52,28 @@ public class MedVetService {
     }
   }
 
-  public List<MedVetResponseDTO> findMedVetByName(String nomeMedVet) {
-    return findMedVetUseCase.execute(nomeMedVet);
+  public MedVetResponseDTO findMedVetByCrmv(Long crmv) {
+    try {
+      return findMedVetUseCase.executeByCrmv(crmv);
+    } catch (NotFoundException e) {
+      throw new NotFoundException("Usuário não encontrado");
+    }
+  }
+
+  public List<MedVetResponseDTO> findMedVetByUserName(String userName) {
+    return findMedVetUseCase.execute(userName);
+  }
+
+  public List<MedVetResponseDTO> findMedVetByNome(String nomeMedVet) {
+    return findMedVetUseCase.executeByNome(nomeMedVet);
   }
 
   @Transactional
-  public void deleteMedVetById(Long id) {
+  public void deleteMedVetByCrmv(Long crmv) {
     try {
-      deleteMedVetUseCase.execute(id);
+      deleteMedVetUseCase.execute(crmv);
     } catch (NotFoundException e) {
-      throw new NotFoundException("Usuário não encontrado");
+      throw new NotFoundException("Usuário não encontrado pelo CRMV");
     } catch (Exception e) {
       e.printStackTrace();
     }

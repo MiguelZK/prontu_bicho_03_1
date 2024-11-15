@@ -24,7 +24,23 @@ public class FindMedVetUseCaseImpl implements FindMedVetUseCase {
     }
 
     @Override
-    public MedVetResponseDTO execute(Long crmv) {
+    public MedVetResponseDTO execute(Long id) {
+        try {
+            MedVet medVet = medVetRepository.findMedVetById(id);
+
+            if (medVet == null) {
+                LOG.info("FindMedVetUseCaseImpl - Linha 35 - if");
+                throw new NotFoundException("MedVet não encontrado");
+            }
+            return modelMapper.map(medVet, MedVetResponseDTO.class);
+        } catch (IllegalArgumentException e) {
+            LOG.info("FindMedVetUseCaseImpl - Linha 40 - catch - IllegalArgumentException");
+            throw new BadRequestException("MedVet não encontrado");
+        }
+    }
+
+    @Override
+    public MedVetResponseDTO executeByCrmv(Long crmv) {
         try {
             MedVet medVet = medVetRepository.findMedVetByCrmv(crmv);
 
@@ -44,12 +60,22 @@ public class FindMedVetUseCaseImpl implements FindMedVetUseCase {
     @Override
     public List<MedVetResponseDTO> execute(String userName) {
         List<MedVetResponseDTO> listResponseDTO = new ArrayList<>();
-        List<MedVet> listMedVet = medVetRepository.findMedVetByName(userName);
+        List<MedVet> listMedVet = medVetRepository.findMedVetByLogin(userName);
 
         for (MedVet medVet : listMedVet) {
             listResponseDTO.add(modelMapper.map(medVet, MedVetResponseDTO.class));
         }
+        return listResponseDTO;
+    }
 
+    @Override
+    public List<MedVetResponseDTO> executeByNome(String nomeCompleto) {
+        List<MedVetResponseDTO> listResponseDTO = new ArrayList<>();
+        List<MedVet> listMedVet = medVetRepository.findMedVetByName(nomeCompleto);
+
+        for (MedVet medVet : listMedVet) {
+            listResponseDTO.add(modelMapper.map(medVet, MedVetResponseDTO.class));
+        }
         return listResponseDTO;
     }
 

@@ -10,7 +10,7 @@ import java.util.Objects;
 public class MedVet extends Usuario {
 
     @Column(nullable = false)
-    private int crmv;
+    private Long crmv;
 
     private String especialidade;
 

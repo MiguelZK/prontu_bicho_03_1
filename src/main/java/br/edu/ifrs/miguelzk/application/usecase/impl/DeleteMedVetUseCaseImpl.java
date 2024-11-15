@@ -12,8 +12,8 @@ public class DeleteMedVetUseCaseImpl implements DeleteMedVetUseCase {
   }
 
   @Override
-  public void execute(Long id) {
-    medVetRepository.deleteMedVetById(id);
+  public void execute(Long crmv) {
+    medVetRepository.deleteMedVetByCrmv(crmv);
   }
 
 }

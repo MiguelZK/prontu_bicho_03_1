@@ -13,6 +13,6 @@ public class MedVetResponseDTO {
 */
 
   private String nomeCompleto;
-  private int crmv;
+  private Long crmv;
   private String especialidade;
 }

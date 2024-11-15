@@ -24,7 +24,7 @@ public class UpdateMedVetUseCaseImpl implements UpdateMedVetUseCase {
   public MedVetResponseDTO execute(Long crmv, MedVetRequestDTO dto) {
     MedVet medVetExistente = medVetRepository.findMedVetByCrmv(crmv);
     if (medVetExistente == null) {
-      throw new EntityNotFoundException("Usuário não encontrado");
+      throw new EntityNotFoundException("Usuário não encontrado ao buscar CRMV");
     }
     modelMapper.map(dto, medVetExistente);
     if (dto.getPassword() != null) {

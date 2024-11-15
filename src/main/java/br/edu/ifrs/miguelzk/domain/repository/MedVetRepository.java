@@ -6,11 +6,16 @@ import java.util.List;
 
 public interface MedVetRepository {
     
-    MedVet findMedVetByCrmv(Long crmv);
-    List<MedVet> findMedVetAll();
-    List<MedVet> findMedVetByName(String userName);
     MedVet save(MedVet medVet);
 
+    MedVet findMedVetByCrmv(Long crmv);
+    MedVet findMedVetById(Long id);
+    List<MedVet> findMedVetAll();
+    List<MedVet> findMedVetByLogin(String userName);
+    List<MedVet> findMedVetByName(String parteDoNome);
+
     MedVet update(MedVet medVet);
-    void deleteMedVetById(Long id);
+
+    void deleteMedVetByCrmv(Long crmv);
+
 }
