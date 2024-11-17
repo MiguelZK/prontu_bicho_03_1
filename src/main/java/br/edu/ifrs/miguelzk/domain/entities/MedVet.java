@@ -9,7 +9,7 @@ import java.util.Objects;
 @Data
 public class MedVet extends Usuario {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long crmv;
 
     private String especialidade;

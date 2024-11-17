@@ -56,7 +56,7 @@ public class AtendimentoController {
   @DELETE
   @RolesAllowed("admin")
   @Path("/{id}")
-  public void deleteAtendimentoById(Long id) {
+  public void deleteAtendimentoById(@PathParam("id") Long id) {
     atendimentoService.deleteAtendimentoById(id);
   }
 

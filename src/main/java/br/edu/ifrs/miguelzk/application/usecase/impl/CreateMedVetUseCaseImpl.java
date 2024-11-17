@@ -25,7 +25,7 @@ public class CreateMedVetUseCaseImpl implements CreateMedVetUseCase {
     public MedVetResponseDTO execute(MedVetRequestDTO request) {
         MedVet medVet = modelMapper.map(request, MedVet.class);
 
-        LOG.info(request.toString());
+//        LOG.info(request.toString());
 
         medVet.setPassword(BcryptUtil.bcryptHash(medVet.getPassword()));
         MedVet saveMedVet = medVetRepository.save(medVet);
