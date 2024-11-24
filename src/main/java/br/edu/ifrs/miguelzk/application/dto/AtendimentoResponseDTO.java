@@ -1,5 +1,6 @@
 package br.edu.ifrs.miguelzk.application.dto;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -8,13 +9,19 @@ import java.util.Set;
 import br.edu.ifrs.miguelzk.domain.entities.Animal;
 import br.edu.ifrs.miguelzk.domain.entities.MedVet;
 import br.edu.ifrs.miguelzk.domain.entities.Usuario;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AtendimentoResponseDTO {
 
   private Long id;
-  //  private DateJavaType dataAtendimento;
+  private Date dataAtendimento;
   private String relatoTutor;
   private String exameClinico;
   private String avaliacaoExames;
@@ -25,8 +32,8 @@ public class AtendimentoResponseDTO {
   private String observarProxConsulta;
 //  private List<DateJavaType> validacaoPelosTutores;
 
-  private Animal animal;
-//  private Set<Usuario> usuarios;
-//  private Set<MedVet> medVets;
+  private AnimalResponseDTO animal;
+  private Set<UsuarioResponseDTO> usuariosDTO; // nomes de usuários
+  private Set<MedVetResponseDTO> medVetsDTO; // nomes de medVets
 
 }

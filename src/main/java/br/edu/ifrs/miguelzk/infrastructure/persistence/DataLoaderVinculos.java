@@ -3,7 +3,9 @@ package br.edu.ifrs.miguelzk.infrastructure.persistence;
 import br.edu.ifrs.miguelzk.application.dto.AnimalRequestDTO;
 import br.edu.ifrs.miguelzk.application.dto.UsuarioRequestDTO;
 import br.edu.ifrs.miguelzk.application.dto.VinculoRequestDTO;
+import br.edu.ifrs.miguelzk.application.dto.MedVetRequestDTO;
 import br.edu.ifrs.miguelzk.application.service.AnimalService;
+import br.edu.ifrs.miguelzk.application.service.MedVetService;
 import br.edu.ifrs.miguelzk.application.service.UsuarioService;
 import br.edu.ifrs.miguelzk.application.service.VinculoService;
 import br.edu.ifrs.miguelzk.domain.enums.PorteCachorro;
@@ -22,32 +24,27 @@ public class DataLoaderVinculos {
     private final VinculoService vinculoService;
     private final UsuarioRepository usuarioRepository;
     private final AnimalRepository animalRepository;
-
-/*    public DataLoaderInterface(UsuarioRepository usuarioRepository, AnimalRepository animalRepository
-            , UsuarioService usuarioService, AnimalService animalService, VinculoService vinculoService) {
-        this.usuarioRepository = usuarioRepository;
-        this.animalRepository = animalRepository;
-        this.usuarioService = usuarioService;
-        this.animalService = animalService;
-        this.vinculoService = vinculoService;
-    }*/
+    private MedVetService medVetService;
 
     @jakarta.inject.Inject
     public DataLoaderVinculos(UsuarioService usuarioService, AnimalService animalService
-            , VinculoService vinculoService, UsuarioRepository usuarioRepository, AnimalRepository animalRepository) {
+            , VinculoService vinculoService, UsuarioRepository usuarioRepository, AnimalRepository animalRepository
+            , MedVetService medVetService) {
         this.usuarioService = usuarioService;
         this.animalService = animalService;
         this.vinculoService = vinculoService;
         this.usuarioRepository = usuarioRepository;
         this.animalRepository = animalRepository;
+        this.medVetService = medVetService;
     }
 
     @PostConstruct
     public void loadData() {
-        // Verificar se os dados já foram inseridos para evitar duplicidade
+        // VERIFICAR SE OS DADOS JÁ FORAM INSERIDOS PARA EVITAR DUPLICIDADE
         if (usuarioRepository.contaUsuarios() == 0 && animalRepository.contaAnimais() == 0) {
             LOG.info("Carregando os dados iniciais no Dataloader...");
-            // Inserir usuários
+
+            // INSERIR USUÁRIOS
             UsuarioRequestDTO usuario1 = new UsuarioRequestDTO();
             usuario1.setRole("admin, user");
             usuario1.setPassword("senha123");
@@ -70,7 +67,7 @@ public class DataLoaderVinculos {
             usuarioService.create(usuario2);
             usuarioService.create(usuario3);
 
-            // Inserir animais
+            // INSERIR ANIMAIS
             AnimalRequestDTO animal1 = new AnimalRequestDTO();
             animal1.setNomeAnimal("Shenka");
             animal1.setPorteCachorro(PorteCachorro.PEQUENO);
@@ -87,7 +84,27 @@ public class DataLoaderVinculos {
             animalService.create(animal2);
             animalService.create(animal3);
 
-            // Relacionar usuários e animais programaticamente
+            // INSERIR MEDVETS
+            MedVetRequestDTO medVet1 = new MedVetRequestDTO();
+            medVet1.setRole("medVet, user");
+            medVet1.setPassword("cantinho");
+            medVet1.setNomeCompleto("Leticia Britto");
+            medVet1.setUserName("leticia01");
+            medVet1.setCrmv(1234L);
+            medVet1.setEspecialidade("Geral");
+
+            MedVetRequestDTO medVet2 = new MedVetRequestDTO();
+            medVet2.setRole("medVet, user");
+            medVet2.setPassword("pancrezyme");
+            medVet2.setNomeCompleto("Guilherme Nutrólogo");
+            medVet2.setUserName("guilherme01");
+            medVet2.setCrmv(4567L);
+            medVet2.setEspecialidade("Nutrólogo");
+
+            medVetService.create(medVet1);
+            medVetService.create(medVet2);
+
+            // RELACIONAR USUÁRIOS E ANIMAIS PROGRAMATICAMENTE
             VinculoRequestDTO vinculo1 = new VinculoRequestDTO();
             vinculo1.setNomeAnimal("Shenka");
             vinculo1.setIdAnimal(1L);
@@ -113,7 +130,7 @@ public class DataLoaderVinculos {
             vinculoService.create(vinculo3);
             vinculoService.create(vinculo4);
 
-            LOG.info("Usuario 1: " + usuario1);
+//            LOG.info("Usuario 1: " + usuario1);
 
             LOG.info("Dados carregados com sucesso.");
         }

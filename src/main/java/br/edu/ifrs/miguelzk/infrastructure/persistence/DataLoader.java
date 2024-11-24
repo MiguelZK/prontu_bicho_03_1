@@ -49,9 +49,9 @@ public class DataLoader {
             usuario3.getAnimais().add(animal2);
             usuario3.getAnimais().add(animal3);
 
-            LOG.info("Usuario 1: " + usuario1);
-            LOG.info("Usuario 2: " + usuario2);
-            LOG.info("Usuario 3: " + usuario3);
+//            LOG.info("Usuario 1: " + usuario1);
+//            LOG.info("Usuario 2: " + usuario2);
+//            LOG.info("Usuario 3: " + usuario3);
 
             animal1.getUsuarios().add(usuario1);
             animal1.getUsuarios().add(usuario2);
@@ -63,7 +63,7 @@ public class DataLoader {
             usuarioRepository.save(usuario2);
             usuarioRepository.save(usuario3);
 
-            LOG.info("Usuario 1 do BD: " + animal1);
+//            LOG.info("Usuario 1 do BD: " + animal1);
 
             animalRepository.save(animal1);
             animalRepository.save(animal2);

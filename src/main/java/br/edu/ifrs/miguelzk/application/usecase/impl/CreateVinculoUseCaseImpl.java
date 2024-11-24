@@ -56,8 +56,8 @@ public class CreateVinculoUseCaseImpl implements CreateVinculoUseCase {
         animalRepository.save(animal);
         usuarioRepository.save(usuario);
 
-        Vinculo saveVinculo = vinculoRepository.save(vinculo);
-        return modelMapper.map(saveVinculo, VinculoResponseDTO.class);
+        Vinculo savedVinculo = vinculoRepository.save(vinculo);
+        return modelMapper.map(savedVinculo, VinculoResponseDTO.class);
     }
 
 }

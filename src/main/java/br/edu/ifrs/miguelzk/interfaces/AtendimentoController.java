@@ -28,7 +28,7 @@ public class AtendimentoController {
     try {
       return Response.ok().entity(atendimentoService.createAtendimento(request)).build();
     } catch (Exception e) {
-      return Response.serverError().build();
+      return Response.serverError().entity("CAUSA: " + e.getCause() + " MENSAGEM: " + e.getMessage()).build();
     }
   }
 

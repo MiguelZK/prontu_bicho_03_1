@@ -2,7 +2,6 @@ package br.edu.ifrs.miguelzk.interfaces;
 
 import br.edu.ifrs.miguelzk.application.dto.MedVetRequestDTO;
 import br.edu.ifrs.miguelzk.application.service.MedVetService;
-import br.edu.ifrs.miguelzk.infrastructure.exception.BusinessException;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
@@ -11,7 +10,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Logger;
@@ -33,20 +31,6 @@ public class MedVetController {
             , PersistenceException, IllegalArgumentException {
         try {
             return Response.ok().entity(medVetService.create(request)).build();
-        } catch (PersistenceException e) {
-            if (e.getCause() instanceof ConstraintViolationException) {
-                ConstraintViolationException cve = (ConstraintViolationException) e.getCause();
-                if (cve.getMessage().contains("Duplicate entry")) {
-                    throw new BusinessException("Registro duplicado: " + cve.getMessage(), cve);
-                }
-            }
-            throw e; // Relança outras exceções se não for de duplicidade
-        } catch (IllegalArgumentException e) {
-            System.out.println("Resposta em controller: userName já existe");
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-        } catch (ConstraintViolationException e) {
-            System.out.println("Resposta em controller: userName já existe");
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (Exception e) { // Captura todas as exceções inicialmente
             Throwable cause = e;
 
@@ -55,17 +39,12 @@ public class MedVetController {
                 if (cause instanceof SQLIntegrityConstraintViolationException) {
                     SQLIntegrityConstraintViolationException sicv = (SQLIntegrityConstraintViolationException) cause;
                     if (sicv.getMessage().contains("Duplicate entry")) {
-                        return Response.status(Response.Status.BAD_REQUEST).entity("Registro duplicado"
-                                + sicv.getMessage()).build();
+                        return Response.status(Response.Status.BAD_REQUEST)
+                                .entity("Registro duplicado " + sicv.getMessage()).build();
                     }
                 }
                 cause = cause.getCause(); // Avança para a próxima causa
             }
-
-
-            logger.severe("Erro ao criar MedVet: " + e.getClass().getName() + " - " + e.getMessage());
-            e.printStackTrace();
-
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Erro interno ao processar a requisição.")
                     .build();

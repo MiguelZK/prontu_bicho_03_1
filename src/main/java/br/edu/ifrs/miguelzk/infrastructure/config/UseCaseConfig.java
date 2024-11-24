@@ -84,7 +84,8 @@ public class UseCaseConfig {
     }
 
     @Produces
-    public FindAtendimentoUseCase findAtendimentoUseCase(AtendimentoRepository atendimentoRepository, ModelMapper modelMapper) {
+    public FindAtendimentoUseCase findAtendimentoUseCase(AtendimentoRepository atendimentoRepository
+            , ModelMapper modelMapper) {
         return new FindAtendimentoUseCaseImpl(atendimentoRepository, modelMapper);
     }
 
