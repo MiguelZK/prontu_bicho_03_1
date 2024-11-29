@@ -23,7 +23,5 @@ public class AtendimentoRequestDTO {
     private Long idAnimal;
     private Set<Long> idUsuarios;
     private Set<Long> crmvMedVets;
-//    private Set<Usuario> usuarios;
-//    private Set<MedVet> medVets;
 
 }

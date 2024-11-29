@@ -27,6 +27,6 @@ public class AnimalComColecoesResponseDTO {
     private Double peso;
     private String descricao;*/
     private PorteCachorro porteCachorro;
-    private Set<Usuario> usuarios;
-    private Set<Atendimento> atendimentos;
+    private Set<UsuarioResponseDTO> usuarios;
+    private Set<AtendimentoResponseDTO> atendimentos;
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
@@ -41,6 +42,7 @@ public class Atendimento extends PanacheEntityBase {
 
     @ToString.Exclude
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "idAnimal")
     private Animal animal;
 

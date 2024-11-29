@@ -1,5 +1,6 @@
 package br.edu.ifrs.miguelzk.interfaces;
 
+import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import jakarta.annotation.security.RolesAllowed;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import br.edu.ifrs.miguelzk.application.dto.AtendimentoRequestDTO;
@@ -38,7 +39,9 @@ public class AtendimentoController {
   public Response findAtendimentoById(@PathParam("id") Long id) {
     try {
       return Response.ok().entity(atendimentoService.findAtendimentoById(id)).build();
-    } catch (Exception e) {
+    } catch (ObjetoNaoEncontradoException e) {
+      return Response.status(Response.Status.NOT_FOUND).build();
+    }catch (Exception e) {
       return Response.serverError().build();
     }
   }
@@ -54,7 +57,7 @@ public class AtendimentoController {
   }
 
   @DELETE
-  @RolesAllowed("admin")
+//  @RolesAllowed("admin")
   @Path("/{id}")
   public void deleteAtendimentoById(@PathParam("id") Long id) {
     atendimentoService.deleteAtendimentoById(id);

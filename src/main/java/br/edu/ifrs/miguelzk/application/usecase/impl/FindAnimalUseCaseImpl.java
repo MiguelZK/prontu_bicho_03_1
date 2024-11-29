@@ -2,12 +2,16 @@ package br.edu.ifrs.miguelzk.application.usecase.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import br.edu.ifrs.miguelzk.application.dto.AnimalComColecoesResponseDTO;
+import br.edu.ifrs.miguelzk.application.dto.*;
+import br.edu.ifrs.miguelzk.application.service.ConverteEntityParaDTO;
+import br.edu.ifrs.miguelzk.domain.entities.Atendimento;
+import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.modelmapper.ModelMapper;
-import br.edu.ifrs.miguelzk.application.dto.AnimalResponseDTO;
 import br.edu.ifrs.miguelzk.application.usecase.FindAnimalUseCase;
 import br.edu.ifrs.miguelzk.domain.entities.Animal;
 import br.edu.ifrs.miguelzk.domain.repository.AnimalRepository;
@@ -16,10 +20,12 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
 
     private final AnimalRepository animalRepository;
     private final ModelMapper modelMapper;
+    private final ConverteEntityParaDTO converteEntityParaDTO;
 
     public FindAnimalUseCaseImpl(AnimalRepository animalRepository, ModelMapper modelMapper) {
         this.animalRepository = animalRepository;
         this.modelMapper = modelMapper;
+        this.converteEntityParaDTO = new ConverteEntityParaDTO(modelMapper);
     }
 
     @Override
@@ -36,16 +42,19 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
 
     @Override
     public AnimalComColecoesResponseDTO findAnimalComColecoesExecute(Long id) {
-        try {
-            Animal animal = animalRepository.findAnimalById(id);
-
-            if (animal == null) {
-                throw new NotFoundException("Animal não encontrado");
-            }
-            return modelMapper.map(animal, AnimalComColecoesResponseDTO.class);
-        } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Animal não encontrado");
+        Optional<Animal> animalOpt = Optional.ofNullable(animalRepository.findAnimalById(id));
+        if(animalOpt.isEmpty()) {
+            throw new ObjetoNaoEncontradoException("Animal Não Encontrado.");
         }
+        Animal animal = animalOpt.get();
+        AnimalComColecoesResponseDTO animalComColecoesResponseDTO = modelMapper
+                .map(animal, AnimalComColecoesResponseDTO.class);
+        animalComColecoesResponseDTO.setUsuarios(animal.getUsuarios().stream()
+                .map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                .collect(Collectors.toSet()));
+        animalComColecoesResponseDTO.setAtendimentos
+                (converteEntityParaDTO.atendimentosParaDTO(animal.getAtendimentos()));
+        return animalComColecoesResponseDTO;
     }
 
     @Override
