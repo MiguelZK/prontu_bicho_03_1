@@ -84,6 +84,11 @@ public class Animal extends PanacheEntityBase {
     @OneToMany(mappedBy = "animal")
     private Set<Vinculo> vinculos = new HashSet<>();
 
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private Set<Vacina> vacinas = new HashSet<>();
+
     public Animal(String nomeAnimal, String porteCachorro) {
         this.nomeAnimal = nomeAnimal;
         this.porteCachorro = PorteCachorro.valueOf(porteCachorro);

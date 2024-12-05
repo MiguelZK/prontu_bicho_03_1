@@ -20,7 +20,7 @@ public class MedVetController {
     private static final Logger logger = Logger.getLogger(MedVetController.class.getName());
 
     @Inject
-    MedVetService medVetService;
+    private MedVetService medVetService;
 
     @POST
 //  @RolesAllowed("admin")

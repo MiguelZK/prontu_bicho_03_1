@@ -94,6 +94,15 @@ public class UseCaseConfig {
         return new DeleteAtendimentoUseCaseImpl(atendimentoRepository);
     }
 
+    // BEANS DE VACINAS
+    @Produces
+    public VacinaUseCase vacinaUseCase(VacinaRepository vacinaRepository,
+                                       AnimalRepository animalRepository,
+                                       AtendimentoRepository atendimentoRepository,
+                                       ModelMapper modelMapper) {
+        return new VacinaUseCaseImpl(vacinaRepository, animalRepository, atendimentoRepository, modelMapper);
+    }
+
     // BEANS DE VINCULOS
     @Produces
     public CreateVinculoUseCase createVinculoUseCase(VinculoRepository vinculoRepository,

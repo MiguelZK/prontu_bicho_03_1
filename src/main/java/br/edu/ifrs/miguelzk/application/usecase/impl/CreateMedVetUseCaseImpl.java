@@ -14,7 +14,7 @@ public class CreateMedVetUseCaseImpl implements CreateMedVetUseCase {
 
     private final MedVetRepository medVetRepository;
     private final ModelMapper modelMapper;
-    private static final Logger LOG = Logger.getLogger(DataLoader.class);
+//    private static final Logger LOG = Logger.getLogger(DataLoader.class);
 
     public CreateMedVetUseCaseImpl(MedVetRepository medVetRepository, ModelMapper modelMapper) {
         this.medVetRepository = medVetRepository;

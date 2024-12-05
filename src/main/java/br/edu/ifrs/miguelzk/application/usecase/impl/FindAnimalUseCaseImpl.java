@@ -40,10 +40,11 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
         return listAnimalResponseDTO;
     }
 
+    // PRONTUÁRIO COMPLETO
     @Override
     public AnimalComColecoesResponseDTO findAnimalComColecoesExecute(Long id) {
         Optional<Animal> animalOpt = Optional.ofNullable(animalRepository.findAnimalById(id));
-        if(animalOpt.isEmpty()) {
+        if (animalOpt.isEmpty()) {
             throw new ObjetoNaoEncontradoException("Animal Não Encontrado.");
         }
         Animal animal = animalOpt.get();
@@ -54,6 +55,9 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
                 .collect(Collectors.toSet()));
         animalComColecoesResponseDTO.setAtendimentos
                 (converteEntityParaDTO.atendimentosParaDTO(animal.getAtendimentos()));
+        animalComColecoesResponseDTO.setVacinas(animal.getVacinas().stream()
+                .map(v -> modelMapper.map(v, VacinaResponseSemAnimalDTO.class))
+                .collect(Collectors.toSet()));
         return animalComColecoesResponseDTO;
     }
 
@@ -63,11 +67,11 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
             Animal animal = animalRepository.findAnimalById(id);
 
             if (animal == null) {
-              throw new NotFoundException("Animal não encontrado");
+                throw new NotFoundException("Animal não encontrado");
             }
             return modelMapper.map(animal, AnimalResponseDTO.class);
         } catch (IllegalArgumentException e) {
-          throw new BadRequestException("Animal não encontrado");
+            throw new BadRequestException("Animal não encontrado");
         }
     }
 

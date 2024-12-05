@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.Response;
 public class UsuarioController {
 
   @Inject
-  UsuarioService usuarioService;
+  private UsuarioService usuarioService;
 
   @POST
 //  @RolesAllowed("admin")

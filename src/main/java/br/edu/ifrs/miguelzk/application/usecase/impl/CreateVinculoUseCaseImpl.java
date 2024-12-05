@@ -20,7 +20,7 @@ public class CreateVinculoUseCaseImpl implements CreateVinculoUseCase {
     private final UsuarioRepository usuarioRepository;
     private final AnimalRepository animalRepository;
     private final ModelMapper modelMapper;
-    private static final Logger LOG = Logger.getLogger(DataLoader.class);
+//    private static final Logger LOG = Logger.getLogger(DataLoader.class);
 
     public CreateVinculoUseCaseImpl(VinculoRepository vinculoRepository, AnimalRepository animalRepository,
                                     UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
@@ -36,7 +36,7 @@ public class CreateVinculoUseCaseImpl implements CreateVinculoUseCase {
         Usuario usuario = usuarioRepository.findUsuarioById(request.getIdUsuario());
         Animal animal = animalRepository.findAnimalById(request.getIdAnimal());
 
-        LOG.info(animal);
+//        LOG.info(animal);
 
         if (usuario == null || animal == null) {
           throw new NotFoundException("Usuário ou animal não encontrado");
@@ -50,8 +50,8 @@ public class CreateVinculoUseCaseImpl implements CreateVinculoUseCase {
 
         animal.getUsuarios().add(usuario);
         usuario.getAnimais().add(animal);
-        LOG.info(animal);
-        LOG.info(animal.getUsuarios());
+//        LOG.info(animal);
+//        LOG.info(animal.getUsuarios());
 
         animalRepository.save(animal);
         usuarioRepository.save(usuario);

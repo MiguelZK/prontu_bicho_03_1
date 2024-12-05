@@ -13,7 +13,7 @@ public class DataLoader {
 
     private final UsuarioRepository usuarioRepository;
     private final AnimalRepository animalRepository;
-    private static final Logger LOG = Logger.getLogger(DataLoader.class);
+//    private static final Logger LOG = Logger.getLogger(DataLoader.class);
 
     public DataLoader(UsuarioRepository usuarioRepository, AnimalRepository animalRepository) {
         this.usuarioRepository = usuarioRepository;
@@ -23,7 +23,7 @@ public class DataLoader {
     @PostConstruct
     public void loadData() {
         // Verificar se os dados já foram inseridos para evitar duplicidade
-        LOG.info("Carregando os dados iniciais no Dataloader...");
+//        LOG.info("Carregando os dados iniciais no Dataloader...");
         if (usuarioRepository.contaUsuarios() == 0 && animalRepository.contaAnimais() == 0) {
             // Inserir usuários
             Usuario usuario1 = new Usuario("Miguel", "miguel", "senha123", "admin, user");
@@ -49,9 +49,11 @@ public class DataLoader {
             usuario3.getAnimais().add(animal2);
             usuario3.getAnimais().add(animal3);
 
-//            LOG.info("Usuario 1: " + usuario1);
-//            LOG.info("Usuario 2: " + usuario2);
-//            LOG.info("Usuario 3: " + usuario3);
+/*
+            LOG.info("Usuario 1: " + usuario1);
+            LOG.info("Usuario 2: " + usuario2);
+            LOG.info("Usuario 3: " + usuario3);
+*/
 
             animal1.getUsuarios().add(usuario1);
             animal1.getUsuarios().add(usuario2);
@@ -69,7 +71,7 @@ public class DataLoader {
             animalRepository.save(animal2);
             animalRepository.save(animal3);
 
-            LOG.info("Dados carregados com sucesso.");
+//            LOG.info("Dados carregados com sucesso.");
         }
     }
 }

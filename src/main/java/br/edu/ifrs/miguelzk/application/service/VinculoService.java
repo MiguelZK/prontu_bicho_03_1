@@ -25,7 +25,8 @@ public class VinculoService {
   @Inject
   private UsuarioService usuarioService;
 
-  @Inject AnimalService animalService;
+  @Inject
+  private AnimalService animalService;
 
   @Inject
   public VinculoService(CreateVinculoUseCase createVinculoUseCase, FindVinculoUseCase findVinculoUseCase

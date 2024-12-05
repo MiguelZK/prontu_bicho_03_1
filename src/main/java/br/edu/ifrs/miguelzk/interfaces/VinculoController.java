@@ -13,7 +13,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 public class VinculoController {
 
   @Inject
-  VinculoService vinculoService;
+  private VinculoService vinculoService;
 
   @POST
 //  @RolesAllowed("admin")

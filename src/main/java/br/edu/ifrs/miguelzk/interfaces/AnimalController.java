@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.Response;
 public class AnimalController {
 
   @Inject
-  public AnimalService animalService;
+  private AnimalService animalService;
 
   @POST
 //  @RolesAllowed("admin, user")
