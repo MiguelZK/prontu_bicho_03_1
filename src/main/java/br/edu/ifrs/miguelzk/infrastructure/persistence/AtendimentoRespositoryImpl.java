@@ -17,6 +17,12 @@ public class AtendimentoRespositoryImpl implements AtendimentoRepository, Panach
   }
 
   @Override
+  public Atendimento update(Atendimento atendimento) {
+    getEntityManager().merge(atendimento);
+    return atendimento;
+  }
+
+  @Override
   public Atendimento findAtendimentoById(Long id) {
     return findById(id);
   }

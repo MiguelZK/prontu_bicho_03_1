@@ -34,7 +34,6 @@ public class VacinaRespositoryImpl implements VacinaRepository, PanacheRepositor
   @Override
   public Vacina update(Vacina vacina) {
     getEntityManager().merge(vacina);
-//    persist(vacina);
     return vacina;
   }
 
