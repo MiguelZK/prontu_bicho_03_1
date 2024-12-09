@@ -17,5 +17,5 @@ public class VacinaTodasResponseDTO {
     private Date dataFabricacao;
     private Date dataValidade;
     private Date dataAplicacao;
-    private AnimalResponseDTO animalResponseDTO;
+//    private AnimalResponseDTO animalResponseDTO;
 }

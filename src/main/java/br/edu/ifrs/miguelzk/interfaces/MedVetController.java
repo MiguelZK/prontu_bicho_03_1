@@ -72,6 +72,7 @@ public class MedVetController {
         try {
             return Response.ok().entity(medVetService.findMedVetById(id)).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.serverError().build();
         }
     }
@@ -83,6 +84,7 @@ public class MedVetController {
         try {
             return Response.ok().entity(medVetService.findMedVetByCrmv(crmv)).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.serverError().build();
         }
     }
@@ -117,7 +119,10 @@ public class MedVetController {
         try {
             medVetService.deleteMedVetByCrmv(crmv);
             return Response.ok().build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.serverError().build();
         }
     }

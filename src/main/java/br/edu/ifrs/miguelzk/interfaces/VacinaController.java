@@ -42,6 +42,7 @@ public class VacinaController {
         try {
             return Response.ok().entity(vacinaService.findVacinaAll()).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.serverError().build();
         }
     }
@@ -52,7 +53,10 @@ public class VacinaController {
     public Response findById(@PathParam("id") Long id) {
         try {
             return Response.ok().entity(vacinaService.findVacinaById(id)).build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.serverError().build();
         }
     }
@@ -75,7 +79,10 @@ public class VacinaController {
         try {
             vacinaService.deleteVacinaById(id);
             return Response.ok().build();
+        } catch (NotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.serverError().build();
         }
     }
