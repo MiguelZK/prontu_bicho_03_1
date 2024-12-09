@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class VacinaResponseDTO {
+public class VacinaComAnimalResponseDTO {
 
     private Long idVacina;
 
@@ -16,4 +16,5 @@ public class VacinaResponseDTO {
     private Date dataFabricacao;
     private Date dataValidade;
     private Date dataAplicacao;
+    private AnimalResponseDTO animalResponseDTO;
 }

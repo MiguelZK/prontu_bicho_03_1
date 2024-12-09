@@ -1,12 +1,8 @@
 package br.edu.ifrs.miguelzk.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -26,6 +22,7 @@ public class Vacina extends PanacheEntityBase {
     private String marca;
     private String lote;
     private Boolean importada;
+    private Boolean registroAtivo;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -42,16 +39,24 @@ public class Vacina extends PanacheEntityBase {
     @CreationTimestamp
     private Date dataCadastro;
 
-    @ToString.Exclude
+/*    @ToString.Exclude
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "idAnimal")
-    private Animal animal;
+    private Animal animal;*/
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Vacina vacina)) return false;
-        return Objects.equals(idVacina, vacina.idVacina) && Objects.equals(nome, vacina.nome) && Objects.equals(marca, vacina.marca) && Objects.equals(lote, vacina.lote) && Objects.equals(importada, vacina.importada) && Objects.equals(dataFabricacao, vacina.dataFabricacao) && Objects.equals(dataValidade, vacina.dataValidade) && Objects.equals(dataAplicacao, vacina.dataAplicacao) && Objects.equals(dataCadastro, vacina.dataCadastro);
+        return Objects.equals(idVacina, vacina.idVacina)
+                && Objects.equals(nome, vacina.nome)
+                && Objects.equals(marca, vacina.marca)
+                && Objects.equals(lote, vacina.lote)
+                && Objects.equals(importada, vacina.importada)
+                && Objects.equals(dataFabricacao, vacina.dataFabricacao)
+                && Objects.equals(dataValidade, vacina.dataValidade)
+                && Objects.equals(dataAplicacao, vacina.dataAplicacao)
+                && Objects.equals(dataCadastro, vacina.dataCadastro);
     }
 
     @Override

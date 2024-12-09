@@ -1,8 +1,8 @@
 package br.edu.ifrs.miguelzk.application.service;
 
 import br.edu.ifrs.miguelzk.application.dto.VacinaRequestDTO;
-import br.edu.ifrs.miguelzk.application.dto.VacinaResponseDTO;
-import br.edu.ifrs.miguelzk.application.dto.VacinaResponseSemAnimalDTO;
+import br.edu.ifrs.miguelzk.application.dto.VacinaComAnimalResponseDTO;
+import br.edu.ifrs.miguelzk.application.dto.VacinaTodasResponseDTO;
 import br.edu.ifrs.miguelzk.application.usecase.VacinaUseCase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
-import java.util.Set;
 
 @ApplicationScoped
 public class VacinaService {
@@ -29,15 +28,15 @@ public class VacinaService {
   }
 
   @Transactional
-  public VacinaResponseDTO create(VacinaRequestDTO request) {
+  public VacinaComAnimalResponseDTO create(VacinaRequestDTO request) {
     return vacinaUseCase.createVacina(request);
   }
 
-  public List<VacinaResponseDTO> findVacinaAll() {
+  public List<VacinaTodasResponseDTO> findVacinaAll() {
     return vacinaUseCase.listAllVacinas();
   }
 
-  public VacinaResponseDTO findVacinaById(Long id) {
+  public VacinaTodasResponseDTO findVacinaById(Long id) {
     try {
       return vacinaUseCase.findVacinaById(id);
     } catch (NotFoundException e) {
@@ -45,12 +44,12 @@ public class VacinaService {
     }
   }
 
-  public Set<VacinaResponseSemAnimalDTO> carteiraDeVacinacao(Long idAnimal) {
+/*  public Set<VacinaResponseDTO> carteiraDeVacinacao(Long idAnimal) {
     return vacinaUseCase.carteiraDeVacinacao(idAnimal);
-  }
+  }*/
 
   @Transactional
-  public VacinaResponseDTO updateVacina(Long id, VacinaRequestDTO request) {
+  public VacinaComAnimalResponseDTO updateVacina(Long id, VacinaRequestDTO request) {
     return vacinaUseCase.updateVacina(id, request);
   }
 

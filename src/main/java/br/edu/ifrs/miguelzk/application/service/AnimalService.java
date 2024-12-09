@@ -1,10 +1,9 @@
 package br.edu.ifrs.miguelzk.application.service;
 
 import java.util.List;
+import java.util.Set;
 
-import br.edu.ifrs.miguelzk.application.dto.AnimalComColecoesResponseDTO;
-import br.edu.ifrs.miguelzk.application.dto.AnimalRequestDTO;
-import br.edu.ifrs.miguelzk.application.dto.AnimalResponseDTO;
+import br.edu.ifrs.miguelzk.application.dto.*;
 import br.edu.ifrs.miguelzk.application.usecase.CreateAnimalUseCase;
 import br.edu.ifrs.miguelzk.application.usecase.DeleteAnimalUseCase;
 import br.edu.ifrs.miguelzk.application.usecase.FindAnimalUseCase;
@@ -62,6 +61,10 @@ public class AnimalService {
     } catch (NotFoundException e) {
       throw new NotFoundException("Animal não encontrado");
     }
+  }
+
+  public AnimalCarteiraVacinacaoResponseDTO carteiraDeVacinacao(Long idAnimal) {
+    return findAnimalUseCase.findAnimalCarteiraVacinacaoExecute(idAnimal);
   }
 
   public List<AnimalResponseDTO> findAnimalByName(String nomeAnimal) {

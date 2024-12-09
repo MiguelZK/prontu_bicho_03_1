@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import br.edu.ifrs.miguelzk.application.dto.*;
 import br.edu.ifrs.miguelzk.application.service.ConverteEntityParaDTO;
-import br.edu.ifrs.miguelzk.domain.entities.Atendimento;
 import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
@@ -56,9 +55,30 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
         animalComColecoesResponseDTO.setAtendimentos
                 (converteEntityParaDTO.atendimentosParaDTO(animal.getAtendimentos()));
         animalComColecoesResponseDTO.setVacinas(animal.getVacinas().stream()
-                .map(v -> modelMapper.map(v, VacinaResponseSemAnimalDTO.class))
+                .filter(vacina -> vacina.getRegistroAtivo())
+                .map(v -> modelMapper.map(v, VacinaResponseDTO.class))
                 .collect(Collectors.toSet()));
         return animalComColecoesResponseDTO;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public AnimalCarteiraVacinacaoResponseDTO findAnimalCarteiraVacinacaoExecute(Long id) {
+        Optional<Animal> animalOpt = Optional.ofNullable(animalRepository.findAnimalById(id));
+        if (animalOpt.isEmpty()) {
+            throw new ObjetoNaoEncontradoException("Animal Não Encontrado.");
+        }
+        Animal animal = animalOpt.get();
+        AnimalCarteiraVacinacaoResponseDTO animalCarteiraVacinacaoResponseDTO = modelMapper
+                .map(animal, AnimalCarteiraVacinacaoResponseDTO.class);
+        animalCarteiraVacinacaoResponseDTO.setVacinas(animal.getVacinas().stream()
+                .filter(vacina -> vacina.getRegistroAtivo())
+                .map(v -> modelMapper.map(v, VacinaResponseDTO.class))
+                .collect(Collectors.toSet()));
+        return animalCarteiraVacinacaoResponseDTO;
     }
 
     @Override

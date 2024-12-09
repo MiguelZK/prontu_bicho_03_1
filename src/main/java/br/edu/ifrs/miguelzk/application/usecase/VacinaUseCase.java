@@ -7,15 +7,15 @@ import java.util.Set;
 
 public interface VacinaUseCase {
 
-    VacinaResponseDTO createVacina(VacinaRequestDTO dto);
+    VacinaComAnimalResponseDTO createVacina(VacinaRequestDTO dto);
 
-    VacinaResponseDTO findVacinaById(Long id);
+    VacinaTodasResponseDTO findVacinaById(Long id);
 
-    Set<VacinaResponseSemAnimalDTO> carteiraDeVacinacao(Long idAnimal);
+    Set<VacinaResponseDTO> carteiraDeVacinacao(Long idAnimal);
 
-    List<VacinaResponseDTO> listAllVacinas();
+    List<VacinaTodasResponseDTO> listAllVacinas();
 
-    VacinaResponseDTO updateVacina(Long id, VacinaRequestDTO dto);
+    VacinaComAnimalResponseDTO updateVacina(Long id, VacinaRequestDTO dto);
 
     void deleteVacina(Long id);
 }

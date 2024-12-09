@@ -1,5 +1,6 @@
 package br.edu.ifrs.miguelzk.interfaces;
 
+import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -55,10 +56,21 @@ public class AnimalController {
   }
 
   @GET
-  @Path("/comcolecoes/{id}")
+  @Path("/prontuario/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response findAnimalComColecoesById(@PathParam("id") Long id) {
     return Response.ok().entity(animalService.findAnimalComColecoesById(id)).build();
+  }
+
+  @GET
+  @Path("/carteiravacinacao")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response carteiraDeVacinacao(@QueryParam("idAnimal") Long idAnimal) {
+    try {
+      return Response.ok().entity(animalService.carteiraDeVacinacao(idAnimal)).build();
+    } catch (ObjetoNaoEncontradoException e) {
+      return Response.status(404).build();
+    }
   }
 
   @DELETE

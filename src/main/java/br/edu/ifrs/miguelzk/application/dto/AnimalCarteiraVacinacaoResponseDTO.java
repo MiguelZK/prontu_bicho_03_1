@@ -1,14 +1,11 @@
 package br.edu.ifrs.miguelzk.application.dto;
 
-//import org.hibernate.type.descriptor.java.DateJavaType;
-
-import br.edu.ifrs.miguelzk.domain.enums.PorteCachorro;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
-public class AnimalComColecoesResponseDTO {
+public class AnimalCarteiraVacinacaoResponseDTO {
 
     private Long id;
     private String nomeAnimal;
@@ -23,8 +20,5 @@ public class AnimalComColecoesResponseDTO {
     private String tipoPelagem;
     private Double peso;
     private String descricao;*/
-    private PorteCachorro porteCachorro;
-    private Set<UsuarioResponseDTO> usuarios;
-    private Set<AtendimentoResponseDTO> atendimentos;
     private Set<VacinaResponseDTO> vacinas;
 }

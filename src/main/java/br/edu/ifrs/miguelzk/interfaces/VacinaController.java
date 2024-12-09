@@ -57,7 +57,7 @@ public class VacinaController {
         }
     }
 
-    @GET
+/*    @GET
     @Path("/carteiravacinacao")
     @Produces(MediaType.APPLICATION_JSON)
     public Response carteiraDeVacinacao(@QueryParam("idAnimal") Long idAnimal) {
@@ -66,7 +66,7 @@ public class VacinaController {
         } catch (ObjetoNaoEncontradoException e) {
             return Response.status(404).build();
         }
-    }
+    }*/
 
     @DELETE
 //  @RolesAllowed("admin")
