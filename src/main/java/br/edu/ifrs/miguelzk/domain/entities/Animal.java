@@ -1,10 +1,9 @@
 package br.edu.ifrs.miguelzk.domain.entities;
 
+import br.edu.ifrs.miguelzk.domain.enums.PorteCachorro;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-
-import br.edu.ifrs.miguelzk.domain.enums.PorteCachorro;
 import lombok.Data;
 import lombok.ToString;
 
@@ -88,7 +87,7 @@ public class Animal extends PanacheEntityBase {
     @JsonManagedReference*/
     @OneToMany(/*mappedBy = "animal", */cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "animal")
-    private Set<Vacina> vacinas = new HashSet<>();
+    private Set<Imunizante> imunizantes = new HashSet<>();
 
     public Animal(String nomeAnimal, String porteCachorro) {
         this.nomeAnimal = nomeAnimal;

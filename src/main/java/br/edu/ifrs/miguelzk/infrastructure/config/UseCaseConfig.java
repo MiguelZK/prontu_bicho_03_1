@@ -94,13 +94,13 @@ public class UseCaseConfig {
         return new DeleteAtendimentoUseCaseImpl(atendimentoRepository);
     }
 
-    // BEANS DE VACINAS
+    // BEANS DE IMUNIZANTES
     @Produces
-    public VacinaUseCase vacinaUseCase(VacinaRepository vacinaRepository,
-                                       AnimalRepository animalRepository,
-                                       AtendimentoRepository atendimentoRepository,
-                                       ModelMapper modelMapper) {
-        return new VacinaUseCaseImpl(vacinaRepository, animalRepository, atendimentoRepository, modelMapper);
+    public ImunizanteUseCase imunizanteUseCase(ImunizanteRepository imunizanteRepository,
+                                               AnimalRepository animalRepository,
+                                               AtendimentoRepository atendimentoRepository,
+                                               ModelMapper modelMapper) {
+        return new ImunizanteUseCaseImpl(imunizanteRepository, animalRepository, atendimentoRepository, modelMapper);
     }
 
     // BEANS DE VINCULOS

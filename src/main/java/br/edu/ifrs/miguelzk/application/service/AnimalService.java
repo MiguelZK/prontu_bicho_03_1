@@ -63,8 +63,8 @@ public class AnimalService {
     }
   }
 
-  public AnimalCarteiraVacinacaoResponseDTO carteiraDeVacinacao(Long idAnimal) {
-    return findAnimalUseCase.findAnimalCarteiraVacinacaoExecute(idAnimal);
+  public AnimalCarteiraVacinacaoResponseDTO carteiraDeImunizantecao(Long idAnimal) {
+    return findAnimalUseCase.findAnimalCarteiraImunizantecaoExecute(idAnimal);
   }
 
   public List<AnimalResponseDTO> findAnimalByName(String nomeAnimal) {

@@ -20,5 +20,5 @@ public class AnimalCarteiraVacinacaoResponseDTO {
     private String tipoPelagem;
     private Double peso;
     private String descricao;*/
-    private Set<VacinaResponseDTO> vacinas;
+    private Set<ImunizanteResponseDTO> vacinas;
 }

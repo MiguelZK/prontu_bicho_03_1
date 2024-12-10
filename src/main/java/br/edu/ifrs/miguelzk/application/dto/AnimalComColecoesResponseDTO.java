@@ -26,5 +26,5 @@ public class AnimalComColecoesResponseDTO {
     private PorteCachorro porteCachorro;
     private Set<UsuarioResponseDTO> usuarios;
     private Set<AtendimentoResponseDTO> atendimentos;
-    private Set<VacinaResponseDTO> vacinas;
+    private Set<ImunizanteResponseDTO> imunizantes;
 }

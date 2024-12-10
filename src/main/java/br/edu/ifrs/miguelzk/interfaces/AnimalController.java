@@ -65,9 +65,9 @@ public class AnimalController {
     @GET
     @Path("/carteiravacinacao")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response carteiraDeVacinacao(@QueryParam("idAnimal") Long idAnimal) {
+    public Response carteiraDeImunizantecao(@QueryParam("idAnimal") Long idAnimal) {
         try {
-            return Response.ok().entity(animalService.carteiraDeVacinacao(idAnimal)).build();
+            return Response.ok().entity(animalService.carteiraDeImunizantecao(idAnimal)).build();
         } catch (ObjetoNaoEncontradoException e) {
             return Response.status(404).build();
         }
