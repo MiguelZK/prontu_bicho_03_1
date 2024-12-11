@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import br.edu.ifrs.miguelzk.application.dto.AtendimentoTodosResponseDTO;
 import br.edu.ifrs.miguelzk.application.dto.MedVetResponseDTO;
 import br.edu.ifrs.miguelzk.application.dto.UsuarioResponseDTO;
 import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import org.modelmapper.ModelMapper;
-import br.edu.ifrs.miguelzk.application.dto.AtendimentoResponseDTO;
 import br.edu.ifrs.miguelzk.application.usecase.FindAtendimentoUseCase;
 import br.edu.ifrs.miguelzk.domain.entities.Atendimento;
 import br.edu.ifrs.miguelzk.domain.repository.AtendimentoRepository;
@@ -25,40 +25,40 @@ public class FindAtendimentoUseCaseImpl implements FindAtendimentoUseCase {
   }
 
   @Override
-  public AtendimentoResponseDTO execute(Long id) {
+  public AtendimentoTodosResponseDTO execute(Long id) {
     Optional<Atendimento> atendimentoOpt = Optional.ofNullable(atendimentoRepository.findAtendimentoById(id));
     if(atendimentoOpt.isEmpty()) {
       throw new ObjetoNaoEncontradoException("Atendimento Não Encontrado.");
     }
     Atendimento atendimento = atendimentoOpt.get();
-    AtendimentoResponseDTO atendimentoResponseDTO = modelMapper
-            .map(atendimento, AtendimentoResponseDTO.class);
-    atendimentoResponseDTO.setUsuariosDTO(atendimento.getUsuarios().stream()
+    AtendimentoTodosResponseDTO atendimentoTodosResponseDTO = modelMapper
+            .map(atendimento, AtendimentoTodosResponseDTO.class);
+    atendimentoTodosResponseDTO.setUsuariosDTO(atendimento.getUsuarios().stream()
             .map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
             .collect(Collectors.toSet()));
-    atendimentoResponseDTO.setMedVetsDTO(atendimento.getMedVets().stream()
+    atendimentoTodosResponseDTO.setMedVetsDTO(atendimento.getMedVets().stream()
             .map(u -> modelMapper.map(u, MedVetResponseDTO.class))
             .collect(Collectors.toSet()));
-    return atendimentoResponseDTO;
+    return atendimentoTodosResponseDTO;
   }
 
   @Override
-  public List<AtendimentoResponseDTO> execute() {
-    List<AtendimentoResponseDTO> listAtendimentoResponse = new ArrayList<>();
+  public List<AtendimentoTodosResponseDTO> execute() {
+    List<AtendimentoTodosResponseDTO> listAtendimentoTodosResponse = new ArrayList<>();
     List<Atendimento> listAtendimento = atendimentoRepository.findAtendimentoAll();
 
     for (Atendimento atendimento : listAtendimento) {
-      AtendimentoResponseDTO atendimentoResponse = modelMapper.map(atendimento, AtendimentoResponseDTO.class);
+      AtendimentoTodosResponseDTO atendimentoTodosResponse = modelMapper.map(atendimento, AtendimentoTodosResponseDTO.class);
       System.out.println(atendimento.getUsuarios());
-      atendimentoResponse.setUsuariosDTO(atendimento.getUsuarios().stream()
+      atendimentoTodosResponse.setUsuariosDTO(atendimento.getUsuarios().stream()
               .map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
               .collect(Collectors.toSet()));
-      atendimentoResponse.setMedVetsDTO(atendimento.getMedVets().stream()
+      atendimentoTodosResponse.setMedVetsDTO(atendimento.getMedVets().stream()
               .map(u -> modelMapper.map(u, MedVetResponseDTO.class))
               .collect(Collectors.toSet()));
-       listAtendimentoResponse.add(atendimentoResponse);
+       listAtendimentoTodosResponse.add(atendimentoTodosResponse);
     }
-    return listAtendimentoResponse;
+    return listAtendimentoTodosResponse;
   }
 
 }

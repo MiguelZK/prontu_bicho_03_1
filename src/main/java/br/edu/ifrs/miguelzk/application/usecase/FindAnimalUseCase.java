@@ -16,5 +16,5 @@ public interface FindAnimalUseCase {
 
   AnimalComColecoesResponseDTO findAnimalComColecoesExecute(Long id);
 
-  AnimalCarteiraVacinacaoResponseDTO findAnimalCarteiraImunizantecaoExecute(Long id);
+  AnimalCarteiraVacinacaoResponseDTO findAnimalCarteiraVacinacaoExecute(Long id);
 }

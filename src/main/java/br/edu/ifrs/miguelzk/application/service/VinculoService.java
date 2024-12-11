@@ -42,11 +42,6 @@ public class VinculoService {
     return createVinculoUseCase.execute(request);
   }
 
-  @Transactional
-  public VinculoResponseDTO updateVinculo(Long id, VinculoRequestDTO request) {
-    return updateVinculoUseCase.execute(id, request);
-  }
-
   public List<VinculoResponseDTO> findVinculoAll() {
     return findVinculoUseCase.execute();
   }
@@ -61,6 +56,11 @@ public class VinculoService {
 
   public List<VinculoResponseDTO> findVinculoByName(String nomeVinculo) {
     return findVinculoUseCase.execute(nomeVinculo);
+  }
+
+  @Transactional
+  public VinculoResponseDTO updateVinculo(Long id, VinculoRequestDTO request) {
+    return updateVinculoUseCase.execute(id, request);
   }
 
   @Transactional

@@ -54,6 +54,7 @@ public class CreateAtendimentoUseCaseImpl implements CreateAtendimentoUseCase {
         atendimento.setProcedimentoRealizado(atendimentoRequest.getProcedimentoRealizado());
         atendimento.setTratamentoInstituido(atendimentoRequest.getTratamentoInstituido());
         atendimento.setObservarProxConsulta(atendimentoRequest.getObservarProxConsulta());
+        atendimento.setRegistroAtivo(true);
 
         // SETANDO ANIMAL NO ATENDIMENTO
         Animal animal = animalRepository.findAnimalById(atendimentoRequest.getIdAnimal());

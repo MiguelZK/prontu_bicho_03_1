@@ -6,29 +6,30 @@ import br.edu.ifrs.miguelzk.application.usecase.UpdateVinculoUseCase;
 import br.edu.ifrs.miguelzk.domain.entities.Usuario;
 import br.edu.ifrs.miguelzk.domain.entities.Vinculo;
 import br.edu.ifrs.miguelzk.domain.repository.VinculoRepository;
+import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 
 public class UpdateVinculoUseCaseImpl implements UpdateVinculoUseCase {
 
-  private final ModelMapper modelMapper;
-  private VinculoRepository vinculoRepository;
+    private final ModelMapper modelMapper;
+    private VinculoRepository vinculoRepository;
 
-  public UpdateVinculoUseCaseImpl(VinculoRepository vinculoRepository, ModelMapper modelMapper) {
-    this.vinculoRepository = vinculoRepository;
-    this.modelMapper = modelMapper;
-  }
-
-  @Override
-  public VinculoResponseDTO execute(Long id, VinculoRequestDTO dto) {
-    Vinculo vinculoExistente = vinculoRepository.findVinculoById(id);
-    if (vinculoExistente == null) {
-      throw new EntityNotFoundException("Usuário não encontrado");
+    public UpdateVinculoUseCaseImpl(VinculoRepository vinculoRepository, ModelMapper modelMapper) {
+        this.vinculoRepository = vinculoRepository;
+        this.modelMapper = modelMapper;
     }
-    Vinculo vinculo = modelMapper.map(dto, Vinculo.class);
-    Vinculo vinculoSaved = vinculoRepository.update(vinculo);
-    return modelMapper.map(vinculoSaved, VinculoResponseDTO.class);
-  }
+
+    @Override
+    public VinculoResponseDTO execute(Long id, VinculoRequestDTO dto) {
+        Vinculo vinculoExistente = vinculoRepository.findVinculoById(id);
+        if (vinculoExistente == null) {
+            throw new ObjetoNaoEncontradoException("Usuário não encontrado");
+        }
+        Vinculo vinculo = modelMapper.map(dto, Vinculo.class);
+        Vinculo vinculoSaved = vinculoRepository.update(vinculo);
+        return modelMapper.map(vinculoSaved, VinculoResponseDTO.class);
+    }
 
 }

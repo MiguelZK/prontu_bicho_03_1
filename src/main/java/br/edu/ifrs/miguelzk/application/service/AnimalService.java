@@ -1,7 +1,6 @@
 package br.edu.ifrs.miguelzk.application.service;
 
 import java.util.List;
-import java.util.Set;
 
 import br.edu.ifrs.miguelzk.application.dto.*;
 import br.edu.ifrs.miguelzk.application.usecase.CreateAnimalUseCase;
@@ -63,8 +62,8 @@ public class AnimalService {
     }
   }
 
-  public AnimalCarteiraVacinacaoResponseDTO carteiraDeImunizantecao(Long idAnimal) {
-    return findAnimalUseCase.findAnimalCarteiraImunizantecaoExecute(idAnimal);
+  public AnimalCarteiraVacinacaoResponseDTO carteiraDeVacinacao(Long idAnimal) {
+    return findAnimalUseCase.findAnimalCarteiraVacinacaoExecute(idAnimal);
   }
 
   public List<AnimalResponseDTO> findAnimalByName(String nomeAnimal) {

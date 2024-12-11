@@ -11,8 +11,6 @@ public interface ImunizanteUseCase {
 
     ImunizanteTodasResponseDTO findImunizanteById(Long id);
 
-    Set<ImunizanteResponseDTO> carteiraDeImunizantecao(Long idAnimal);
-
     List<ImunizanteTodasResponseDTO> listAllImunizantes();
 
     ImunizanteComAnimalResponseDTO updateImunizante(Long id, ImunizanteRequestDTO dto);

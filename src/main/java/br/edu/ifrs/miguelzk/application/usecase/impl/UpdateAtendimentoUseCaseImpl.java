@@ -2,8 +2,7 @@ package br.edu.ifrs.miguelzk.application.usecase.impl;
 
 import br.edu.ifrs.miguelzk.application.dto.AtendimentoRequestDTO;
 import br.edu.ifrs.miguelzk.application.dto.AtendimentoResponseDTO;
-import br.edu.ifrs.miguelzk.application.service.AnimalService;
-import br.edu.ifrs.miguelzk.application.service.AtendimentoService;
+import br.edu.ifrs.miguelzk.application.utils.ConverteEntityParaDTO;
 import br.edu.ifrs.miguelzk.application.usecase.UpdateAtendimentoUseCase;
 import br.edu.ifrs.miguelzk.domain.entities.Animal;
 import br.edu.ifrs.miguelzk.domain.entities.Atendimento;
@@ -40,22 +39,18 @@ public class UpdateAtendimentoUseCaseImpl implements UpdateAtendimentoUseCase {
     @Override
     public AtendimentoResponseDTO execute(Long id, AtendimentoRequestDTO dto) {
         Atendimento atendimentoExistente = atendimentoRepository.findAtendimentoById(id);
-        if (atendimentoExistente == null) {
+        if (atendimentoExistente == null && atendimentoExistente.getRegistroAtivo()) {
             throw new NotFoundException("Atendimento não encontrado");
         }
         // CRIA ATENDIMENTO ATUALIZADO
         Atendimento atendimento = modelMapper.map(dto, Atendimento.class);
+        atendimento.setIdAtendimento(null);
+        atendimento.setRegistroAtivo(true);
 
         // VERIFICA ANIMAL E ATUALIZA
         Animal animal = animalRepository.findAnimalById(dto.getIdAnimal());
         if (animal == null) {
             throw new NotFoundException("Animal não encontrado");
-        }
-        if (!animal.equals(atendimentoExistente.getAnimal())) {
-            if (animal.getAtendimentos().add(atendimentoExistente)) {
-                atendimentoExistente.getAnimal().getAtendimentos().remove(atendimentoExistente);
-            }
-            atendimentoExistente.setAnimal(animal);
         }
 
         // VERIFICA USUARIOS E ATUALIZA
@@ -63,20 +58,44 @@ public class UpdateAtendimentoUseCaseImpl implements UpdateAtendimentoUseCase {
         dto.getIdUsuarios().stream().map(u -> usuarios.add(usuarioRepository.findUsuarioById(u)))
                 .collect(Collectors.toSet());
 
-        atendimentoExistente.setUsuarios(usuarios);
+        atendimento.setUsuarios(usuarios);
 
-        // VERIFICA MEDVETS E ATUALIZA
+/*        // VERIFICA MEDVETS E ATUALIZA
         Set<MedVet> medVets = new HashSet<>();
         dto.getCrmvMedVets().stream().map(m -> medVets.add(medVetRepository.findMedVetById(m)))
                 .collect(Collectors.toSet());
 
-        atendimentoExistente.setMedVets(medVets);
+        atendimento.setMedVets(medVets);*/
+
+        // SETANDO MEDVETS NO ATENDIMENTO
+        Set<MedVet> medVets = new HashSet<>();
+        dto.getCrmvMedVets().forEach((crmv) -> {
+            try {
+                MedVet medVet = medVetRepository.findMedVetByCrmv(crmv);
+                medVets.add(medVet);
+            } catch (NotFoundException e) {
+                System.out.println("medVet com CRMV " + crmv + "não encontrado");
+            }
+        });
+        atendimento.setMedVets(medVets);
+//        atendimento.getMedVets().addAll(medVets);
 
         System.out.println("ATENDIMENTO ATUALIZADO: " + atendimentoExistente);
 
+        // MANTÉM IMUNIZANTES NO REGISTRO DE ATENDIMENTO ATUALIZADO
+        atendimento.setImunizantes(atendimentoExistente.getImunizantes());
+
         // ATUALIZA O REGISTRO
-        Atendimento atendimentoSaved = atendimentoRepository.update(atendimentoExistente);
-        return modelMapper.map(atendimentoSaved, AtendimentoResponseDTO.class);
+        Atendimento atendimentoSaved = atendimentoRepository.save(atendimento);
+        System.out.println(atendimentoSaved);
+        atualizaAtendimentoExistente(atendimentoExistente);
+//        System.out.println(ConverteEntityParaDTO.teste());
+
+        return ConverteEntityParaDTO.atendimentoParaDTO(atendimentoSaved);
     }
 
+    public void atualizaAtendimentoExistente(Atendimento atendimento) {
+        atendimento.setRegistroAtivo(false);
+        atendimentoRepository.update(atendimento);
+    }
 }

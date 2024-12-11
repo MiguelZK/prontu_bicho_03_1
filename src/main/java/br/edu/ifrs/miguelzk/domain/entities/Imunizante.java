@@ -3,7 +3,10 @@ package br.edu.ifrs.miguelzk.domain.entities;
 import br.edu.ifrs.miguelzk.domain.enums.TipoImunizante;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -11,8 +14,9 @@ import java.util.Objects;
 
 @Entity
 @Data
-/*@AllArgsConstructor
-@NoArgsConstructor*/
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Imunizante extends PanacheEntityBase {
 
     @Id

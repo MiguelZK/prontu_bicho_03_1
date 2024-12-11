@@ -2,6 +2,7 @@ package br.edu.ifrs.miguelzk.interfaces;
 
 import br.edu.ifrs.miguelzk.application.dto.VinculoRequestDTO;
 import br.edu.ifrs.miguelzk.application.service.VinculoService;
+import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -29,7 +30,11 @@ public class VinculoController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateVinculo(@PathParam("id") Long id, @RequestBody VinculoRequestDTO request) {
-        return Response.ok().entity(vinculoService.updateVinculo(id, request)).build();
+        try {
+            return Response.ok().entity(vinculoService.updateVinculo(id, request)).build();
+        } catch (ObjetoNaoEncontradoException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET
@@ -37,8 +42,10 @@ public class VinculoController {
     public Response findAll() {
         try {
             return Response.ok().entity(vinculoService.findVinculoAll()).build();
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return Response.serverError().build();
         }
     }
@@ -50,7 +57,6 @@ public class VinculoController {
         try {
             return Response.ok().entity(vinculoService.findVinculoById(id)).build();
         } catch (Exception e) {
-            e.printStackTrace();
             return Response.serverError().build();
         }
     }

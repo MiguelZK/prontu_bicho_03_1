@@ -2,8 +2,11 @@ package br.edu.ifrs.miguelzk.application.usecase.impl;
 
 import br.edu.ifrs.miguelzk.application.dto.*;
 import br.edu.ifrs.miguelzk.application.usecase.ImunizanteUseCase;
+import br.edu.ifrs.miguelzk.application.utils.ConverteDTOParaEntity;
 import br.edu.ifrs.miguelzk.domain.entities.Animal;
+import br.edu.ifrs.miguelzk.domain.entities.Atendimento;
 import br.edu.ifrs.miguelzk.domain.entities.Imunizante;
+import br.edu.ifrs.miguelzk.domain.enums.TipoImunizante;
 import br.edu.ifrs.miguelzk.domain.repository.*;
 import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import br.edu.ifrs.miguelzk.infrastructure.persistence.DataLoader;
@@ -18,49 +21,89 @@ import java.util.stream.Collectors;
 public class ImunizanteUseCaseImpl implements ImunizanteUseCase {
 
     private static final Logger LOG = Logger.getLogger(DataLoader.class);
-    private final ImunizanteRepository vacinaRepository;
+    private final ImunizanteRepository imunizanteRepository;
     private final AnimalRepository animalRepository;
     private final AtendimentoRepository atendimentoRepository;
     private final ModelMapper modelMapper;
 
-    public ImunizanteUseCaseImpl(ImunizanteRepository vacinaRepository, AnimalRepository animalRepository
+    public ImunizanteUseCaseImpl(ImunizanteRepository imunizanteRepository, AnimalRepository animalRepository
             , AtendimentoRepository atendimentoRepository, ModelMapper modelMapper) {
-        this.vacinaRepository = vacinaRepository;
+        this.imunizanteRepository = imunizanteRepository;
         this.animalRepository = animalRepository;
         this.atendimentoRepository = atendimentoRepository;
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * @implNote Se o imunizante foi aplicado em atendimento, deve ser criado atendimento antes do imunizante.
+     * No caso de ser uma vacina, é obrigatório ter atendimento, pois deve ser aplicado por medVet.
+     */
     @Override
     public ImunizanteComAnimalResponseDTO createImunizante(ImunizanteRequestDTO dto) {
-        Imunizante vacina = modelMapper.map(dto, Imunizante.class);
-        vacina.setIdImunizante(null);
+//        Imunizante imunizante = modelMapper.map(dto, Imunizante.class);
+        Imunizante imunizante = ConverteDTOParaEntity.dtoParaImunizante(dto);
+        imunizante.setIdImunizante(null);
+        imunizante.setRegistroAtivo(true);
+
+        // VERIFICA ANIMAL IMUNIZADO
         Optional<Animal> animalOpt = Optional.ofNullable(animalRepository.findAnimalById(dto.getIdAnimal()));
         if (animalOpt.isEmpty()) {
             throw new ObjetoNaoEncontradoException("Animal não encontrado");
         }
         Animal animal = animalOpt.get();
-//        vacina.setAnimal(animal);
-        vacina.setRegistroAtivo(true);
-        Imunizante savedImunizante = vacinaRepository.save(vacina);
+
+        Imunizante savedImunizante = imunizanteRepository.save(imunizante);
+
+        ImunizanteComAnimalResponseDTO imunizanteComAnimalResponseDTO =
+                modelMapper.map(savedImunizante, ImunizanteComAnimalResponseDTO.class);
+
+        // VERIFICA ATENDIMENTO, SE HOUVER
+        if (dto.getTipoImunizante() == TipoImunizante.VACINA || dto.getIdAtendimento() != null) {
+            Optional<Atendimento> atendimentoOpt =
+                    Optional.ofNullable(atendimentoRepository.findAtendimentoById(dto.getIdAtendimento()));
+            if (atendimentoOpt.isEmpty()) {
+                throw new ObjetoNaoEncontradoException("Atendimento não encontrado");
+            } else if (dto.getIdAtendimento() == null) {
+                throw new IllegalArgumentException("Registro de vacina precisa de id de atendimento válido");
+            }
+            Atendimento atendimento = atendimentoOpt.get();
+
+            if (!Objects.equals(atendimento.getAnimal().getIdAnimal(), dto.getIdAnimal())) {
+                throw new BadRequestException("O animal deve ser o mesmo do atendimento");
+            }
+
+            atendimento.getImunizantes().add(savedImunizante);
+            atendimentoRepository.update(atendimento);
+            imunizanteComAnimalResponseDTO.setAtendimentoParaImunizanteResponseDTO(modelMapper
+                    .map(atendimento, AtendimentoParaImunizanteResponseDTO.class));
+            imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setUsuariosDTO(
+                    atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                            .collect(Collectors.toSet())
+            );
+            imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setMedVetsDTO(
+                    atendimento.getMedVets().stream().map(m -> modelMapper.map(m, MedVetResponseDTO.class))
+                            .collect(Collectors.toSet())
+            );
+        }
+
         animal.getImunizantes().add(savedImunizante);
         animalRepository.update(animal);
-        ImunizanteComAnimalResponseDTO vacinaComAnimalResponseDTO = modelMapper.map(savedImunizante, ImunizanteComAnimalResponseDTO.class);
-        vacinaComAnimalResponseDTO.setAnimalResponseDTO(modelMapper.map(animal, AnimalResponseDTO.class));
-        return vacinaComAnimalResponseDTO;
+
+        imunizanteComAnimalResponseDTO.setAnimalResponseDTO(modelMapper.map(animal, AnimalResponseDTO.class));
+        return imunizanteComAnimalResponseDTO;
     }
 
     @Override
     public ImunizanteTodasResponseDTO findImunizanteById(Long id) {
         try {
-            Imunizante vacina = vacinaRepository.findImunizanteById(id);
+            Imunizante imunizante = imunizanteRepository.findImunizanteById(id);
 
-            if (vacina == null) {
-                throw new NotFoundException("Imunizante id " + id + " não encontrada");
+            if (imunizante == null) {
+                throw new NotFoundException("Imunizante id " + id + " não encontrado");
             }
-            ImunizanteTodasResponseDTO vacinaTodasResponseDTO = modelMapper.map(vacina, ImunizanteTodasResponseDTO.class);
-//            vacinaResponseDTO.setAnimalResponseDTO(modelMapper.map(vacina.getAnimal(), AnimalResponseDTO.class));
-            return vacinaTodasResponseDTO;
+            ImunizanteTodasResponseDTO imunizanteTodasResponseDTO =
+                    modelMapper.map(imunizante, ImunizanteTodasResponseDTO.class);
+            return imunizanteTodasResponseDTO;
         } catch (IllegalArgumentException e) {
             throw new BadRequestException("Imunizante não encontrado");
         }
@@ -68,63 +111,85 @@ public class ImunizanteUseCaseImpl implements ImunizanteUseCase {
 
     @Override
     public List<ImunizanteTodasResponseDTO> listAllImunizantes() {
-        List<ImunizanteTodasResponseDTO> vacinaTodasResponseDTOS = new ArrayList<>();
-        List<Imunizante> listImunizante = vacinaRepository.findImunizanteAll();
+        List<ImunizanteTodasResponseDTO> imunizanteTodasResponseDTOS = new ArrayList<>();
+        List<Imunizante> listImunizante = imunizanteRepository.findImunizanteAll();
 
-        for (Imunizante vacina : listImunizante) {
-            ImunizanteTodasResponseDTO vacinaTodasResponseDTO = modelMapper.map(vacina, ImunizanteTodasResponseDTO.class);
-//            vacinaTodasResponseDTO.setAnimalResponseDTO(modelMapper.map(vacina.getAnimal(), AnimalResponseDTO.class));
-            vacinaTodasResponseDTOS.add(vacinaTodasResponseDTO);
+        for (Imunizante imunizante : listImunizante) {
+            ImunizanteTodasResponseDTO imunizanteTodasResponseDTO =
+                    modelMapper.map(imunizante, ImunizanteTodasResponseDTO.class);
+            imunizanteTodasResponseDTOS.add(imunizanteTodasResponseDTO);
         }
 
-        return vacinaTodasResponseDTOS;
+        return imunizanteTodasResponseDTOS;
     }
 
-    @Override
-    public Set<ImunizanteResponseDTO> carteiraDeImunizantecao(Long idAnimal) {
-        Optional<Animal> animalOpt = Optional.ofNullable(animalRepository.findAnimalById(idAnimal));
-        if (animalOpt.isEmpty()) {
-            throw new ObjetoNaoEncontradoException("Animal Não Encontrado.");
-        }
-        return animalOpt.get().getImunizantes().stream()
-                .map(vacina -> modelMapper.map(vacina, ImunizanteResponseDTO.class))
-                .collect(Collectors.toSet());
-    }
-
+    /**
+     * @implNote Se o imunizante foi aplicado em atendimento, deve ser criado atendimento antes do imunizante.
+     * No caso de ser uma vacina, é obrigatório ter atendimento, pois deve ser aplicado por medVet.
+     */
     @Override
     public ImunizanteComAnimalResponseDTO updateImunizante(Long id, ImunizanteRequestDTO dto) {
 
-        Imunizante vacinaExistente = vacinaRepository.findImunizanteById(id);
-        if (vacinaExistente == null) {
-            throw new ObjetoNaoEncontradoException("Imunizante não encontrada");
+        Imunizante imunizanteExistente = imunizanteRepository.findImunizanteById(id);
+        if (imunizanteExistente == null) {
+            throw new ObjetoNaoEncontradoException("Imunizante não encontrado");
         }
 
         Animal animal = animalRepository.findAnimalById(dto.getIdAnimal());
         if (animal == null) {
-            throw new ObjetoNaoEncontradoException("Animal não encontrada");
+            throw new ObjetoNaoEncontradoException("Animal não encontrado");
         }
 
-        Imunizante vacina = modelMapper.map(dto, Imunizante.class);
-        vacina.setIdImunizante(null);
-        vacina.setRegistroAtivo(true);
-        Imunizante vacinaSaved = vacinaRepository.save(vacina);
+        Imunizante imunizante = modelMapper.map(dto, Imunizante.class);
+        imunizante.setIdImunizante(null);
+        imunizante.setRegistroAtivo(true);
+        Imunizante savedImunizante = imunizanteRepository.save(imunizante);
 
-        vacinaExistente.setRegistroAtivo(false);
+        imunizanteExistente.setRegistroAtivo(false);
 
-        animal.getImunizantes().add(vacinaSaved);
+        animal.getImunizantes().add(savedImunizante);
         animalRepository.update(animal);
-        ImunizanteComAnimalResponseDTO vacinaComAnimalResponseDTO = modelMapper.map(vacinaSaved, ImunizanteComAnimalResponseDTO.class);
-        vacinaComAnimalResponseDTO.setAnimalResponseDTO(modelMapper.map(animal, AnimalResponseDTO.class));
-        return vacinaComAnimalResponseDTO;
+        ImunizanteComAnimalResponseDTO imunizanteComAnimalResponseDTO =
+                modelMapper.map(savedImunizante, ImunizanteComAnimalResponseDTO.class);
+
+        // VERIFICA ATENDIMENTO, SE HOUVER
+        if (dto.getTipoImunizante() == TipoImunizante.VACINA || dto.getIdAtendimento() != null) {
+            Optional<Atendimento> atendimentoOpt =
+                    Optional.ofNullable(atendimentoRepository.findAtendimentoById(dto.getIdAtendimento()));
+            if (atendimentoOpt.isEmpty()) {
+                throw new ObjetoNaoEncontradoException("Atendimento não encontrado");
+            }
+            Atendimento atendimento = atendimentoOpt.get();
+
+            if (!Objects.equals(atendimento.getAnimal().getIdAnimal(), dto.getIdAnimal())) {
+                throw new BadRequestException("O animal deve ser o mesmo do atendimento");
+            }
+
+            atendimento.getImunizantes().add(savedImunizante);
+            atendimentoRepository.update(atendimento);
+            imunizanteComAnimalResponseDTO.setAtendimentoParaImunizanteResponseDTO(modelMapper
+                    .map(atendimento, AtendimentoParaImunizanteResponseDTO.class));
+            imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setUsuariosDTO(
+                    atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                            .collect(Collectors.toSet())
+            );
+            imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setMedVetsDTO(
+                    atendimento.getMedVets().stream().map(m -> modelMapper.map(m, MedVetResponseDTO.class))
+                            .collect(Collectors.toSet())
+            );
+        }
+
+        imunizanteComAnimalResponseDTO.setAnimalResponseDTO(modelMapper.map(animal, AnimalResponseDTO.class));
+        return imunizanteComAnimalResponseDTO;
     }
 
     @Override
     public void deleteImunizante(Long id) {
-        Optional<Imunizante> vacinaOpt = Optional.ofNullable(vacinaRepository.findImunizanteById(id));
-        if (vacinaOpt.isEmpty()) {
-            throw new ObjetoNaoEncontradoException("Imunizante não Encontrada.");
+        Optional<Imunizante> imunizanteOpt = Optional.ofNullable(imunizanteRepository.findImunizanteById(id));
+        if (imunizanteOpt.isEmpty()) {
+            throw new ObjetoNaoEncontradoException("Imunizante não Encontrado.");
         }
-        Imunizante vacina = vacinaOpt.get();
-        vacinaRepository.deleteImunizanteById(vacina.getIdImunizante());
+        Imunizante imunizante = imunizanteOpt.get();
+        imunizanteRepository.deleteImunizanteById(imunizante.getIdImunizante());
     }
 }

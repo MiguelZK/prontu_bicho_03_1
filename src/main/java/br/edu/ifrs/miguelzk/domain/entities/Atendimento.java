@@ -38,6 +38,7 @@ public class Atendimento extends PanacheEntityBase {
     private String procedimentoRealizado;
     private String tratamentoInstituido;
     private String observarProxConsulta;
+    private Boolean registroAtivo;
 //    private List<DateJavaType> validacaoPelosTutores;
 
     @ToString.Exclude
@@ -61,6 +62,10 @@ public class Atendimento extends PanacheEntityBase {
             joinColumns = {@JoinColumn(name = "idAtendimento")},
             inverseJoinColumns = {@JoinColumn(name = "crmv")})
     private Set<MedVet> medVets = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    @JoinColumn(name = "atendimento")
+    private Set<Imunizante> imunizantes = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

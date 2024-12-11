@@ -19,4 +19,5 @@ public class ImunizanteComAnimalResponseDTO {
     private Date dataValidade;
     private Date dataAplicacao;
     private AnimalResponseDTO animalResponseDTO;
+    private AtendimentoParaImunizanteResponseDTO atendimentoParaImunizanteResponseDTO;
 }

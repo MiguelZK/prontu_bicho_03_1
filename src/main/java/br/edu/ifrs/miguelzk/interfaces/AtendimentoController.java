@@ -1,18 +1,13 @@
 package br.edu.ifrs.miguelzk.interfaces;
 
+import br.edu.ifrs.miguelzk.application.dto.VinculoRequestDTO;
 import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.ws.rs.*;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import br.edu.ifrs.miguelzk.application.dto.AtendimentoRequestDTO;
 import br.edu.ifrs.miguelzk.application.service.AtendimentoService;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -55,6 +50,18 @@ public class AtendimentoController {
         } catch (Exception e) {
             e.printStackTrace();
             return Response.serverError().build();
+        }
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAtendimento(@PathParam("id") Long id, @RequestBody AtendimentoRequestDTO request) {
+        try {
+            return Response.ok().entity(atendimentoService.updateAtendimento(id, request)).build();
+        } catch (ObjetoNaoEncontradoException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 

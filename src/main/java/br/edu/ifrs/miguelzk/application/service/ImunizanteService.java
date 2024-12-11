@@ -14,7 +14,7 @@ import java.util.List;
 @ApplicationScoped
 public class ImunizanteService {
 
-  private final ImunizanteUseCase vacinaUseCase;
+  private final ImunizanteUseCase imunizanteUseCase;
 
   @Inject
   private UsuarioService usuarioService;
@@ -23,39 +23,39 @@ public class ImunizanteService {
   private AnimalService animalService;
 
   @Inject
-  public ImunizanteService(ImunizanteUseCase vacinaUseCase) {
-    this.vacinaUseCase = vacinaUseCase;
+  public ImunizanteService(ImunizanteUseCase imunizanteUseCase) {
+    this.imunizanteUseCase = imunizanteUseCase;
   }
 
   @Transactional
   public ImunizanteComAnimalResponseDTO create(ImunizanteRequestDTO request) {
-    return vacinaUseCase.createImunizante(request);
+    return imunizanteUseCase.createImunizante(request);
   }
 
   public List<ImunizanteTodasResponseDTO> findImunizanteAll() {
-    return vacinaUseCase.listAllImunizantes();
+    return imunizanteUseCase.listAllImunizantes();
   }
 
   public ImunizanteTodasResponseDTO findImunizanteById(Long id) {
     try {
-      return vacinaUseCase.findImunizanteById(id);
+      return imunizanteUseCase.findImunizanteById(id);
     } catch (NotFoundException e) {
       throw new NotFoundException(e.getMessage());
     }
   }
 
-/*  public Set<ImunizanteResponseDTO> carteiraDeImunizantecao(Long idAnimal) {
-    return vacinaUseCase.carteiraDeImunizantecao(idAnimal);
+/*  public Set<ImunizanteResponseDTO> carteiraDeVacinacao(Long idAnimal) {
+    return vacinaUseCase.carteiraDeVacinacao(idAnimal);
   }*/
 
   @Transactional
   public ImunizanteComAnimalResponseDTO updateImunizante(Long id, ImunizanteRequestDTO request) {
-    return vacinaUseCase.updateImunizante(id, request);
+    return imunizanteUseCase.updateImunizante(id, request);
   }
 
   @Transactional
   public void deleteImunizanteById(Long id) {
-    vacinaUseCase.deleteImunizante(id);
+    imunizanteUseCase.deleteImunizante(id);
   }
 
 }

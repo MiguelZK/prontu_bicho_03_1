@@ -77,7 +77,9 @@ public class UseCaseConfig {
     // BEANS DE ATENDIMENTO
     @Produces
     public CreateAtendimentoUseCase createAtendimentoUseCase(AtendimentoRepository atendimentoRepository
-            , UsuarioRepository usuarioRepository, AnimalRepository animalRepository, MedVetRepository medVetRepository
+            , AnimalRepository animalRepository
+            , UsuarioRepository usuarioRepository
+            , MedVetRepository medVetRepository
             , ModelMapper modelMapper) {
         return new CreateAtendimentoUseCaseImpl(atendimentoRepository, usuarioRepository, animalRepository
                 , medVetRepository, modelMapper);
@@ -87,6 +89,17 @@ public class UseCaseConfig {
     public FindAtendimentoUseCase findAtendimentoUseCase(AtendimentoRepository atendimentoRepository
             , ModelMapper modelMapper) {
         return new FindAtendimentoUseCaseImpl(atendimentoRepository, modelMapper);
+    }
+
+
+    @Produces
+    public UpdateAtendimentoUseCase updateAtendimentoUseCase(AtendimentoRepository atendimentoRepository
+            , AnimalRepository animalRepository
+            , UsuarioRepository usuarioRepository
+            , MedVetRepository medVetRepository
+            , ModelMapper modelMapper) {
+        return new UpdateAtendimentoUseCaseImpl(atendimentoRepository, animalRepository, usuarioRepository
+                , medVetRepository, modelMapper);
     }
 
     @Produces

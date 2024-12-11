@@ -17,4 +17,5 @@ public class ImunizanteRequestDTO {
     private Date dataValidade;
     private Date dataAplicacao;
     private Long idAnimal;
+    private Long idAtendimento;
 }

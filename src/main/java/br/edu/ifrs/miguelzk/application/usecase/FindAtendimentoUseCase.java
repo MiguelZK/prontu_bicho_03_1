@@ -2,12 +2,12 @@ package br.edu.ifrs.miguelzk.application.usecase;
 
 import java.util.List;
 
-import br.edu.ifrs.miguelzk.application.dto.AtendimentoResponseDTO;
+import br.edu.ifrs.miguelzk.application.dto.AtendimentoTodosResponseDTO;
 
 public interface FindAtendimentoUseCase {
 
-  AtendimentoResponseDTO execute(Long id);
+  AtendimentoTodosResponseDTO execute(Long id);
 
-  List<AtendimentoResponseDTO> execute();
+  List<AtendimentoTodosResponseDTO> execute();
 
 }
