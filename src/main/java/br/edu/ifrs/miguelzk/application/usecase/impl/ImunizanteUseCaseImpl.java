@@ -9,10 +9,8 @@ import br.edu.ifrs.miguelzk.domain.entities.Imunizante;
 import br.edu.ifrs.miguelzk.domain.enums.TipoImunizante;
 import br.edu.ifrs.miguelzk.domain.repository.*;
 import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
-import br.edu.ifrs.miguelzk.infrastructure.persistence.DataLoader;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
-import org.jboss.logging.Logger;
 import org.modelmapper.ModelMapper;
 
 import java.util.*;
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 
 public class ImunizanteUseCaseImpl implements ImunizanteUseCase {
 
-    private static final Logger LOG = Logger.getLogger(DataLoader.class);
     private final ImunizanteRepository imunizanteRepository;
     private final AnimalRepository animalRepository;
     private final AtendimentoRepository atendimentoRepository;
@@ -77,7 +74,7 @@ public class ImunizanteUseCaseImpl implements ImunizanteUseCase {
             imunizanteComAnimalResponseDTO.setAtendimentoParaImunizanteResponseDTO(modelMapper
                     .map(atendimento, AtendimentoParaImunizanteResponseDTO.class));
             imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setUsuariosDTO(
-                    atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                    atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
                             .collect(Collectors.toSet())
             );
             imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setMedVetsDTO(
@@ -170,7 +167,7 @@ public class ImunizanteUseCaseImpl implements ImunizanteUseCase {
             imunizanteComAnimalResponseDTO.setAtendimentoParaImunizanteResponseDTO(modelMapper
                     .map(atendimento, AtendimentoParaImunizanteResponseDTO.class));
             imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setUsuariosDTO(
-                    atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                    atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
                             .collect(Collectors.toSet())
             );
             imunizanteComAnimalResponseDTO.getAtendimentoParaImunizanteResponseDTO().setMedVetsDTO(

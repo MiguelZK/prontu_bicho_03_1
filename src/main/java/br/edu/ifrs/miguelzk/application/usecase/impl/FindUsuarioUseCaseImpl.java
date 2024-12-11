@@ -3,9 +3,6 @@ package br.edu.ifrs.miguelzk.application.usecase.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ifrs.miguelzk.application.dto.AnimalResponseDTO;
-import br.edu.ifrs.miguelzk.domain.entities.Animal;
-import br.edu.ifrs.miguelzk.infrastructure.persistence.DataLoader;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import org.modelmapper.ModelMapper;

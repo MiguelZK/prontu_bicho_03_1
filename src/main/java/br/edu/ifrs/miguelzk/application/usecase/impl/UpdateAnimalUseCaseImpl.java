@@ -2,14 +2,9 @@ package br.edu.ifrs.miguelzk.application.usecase.impl;
 
 import br.edu.ifrs.miguelzk.application.dto.AnimalRequestDTO;
 import br.edu.ifrs.miguelzk.application.dto.AnimalResponseDTO;
-import br.edu.ifrs.miguelzk.application.dto.UsuarioRequestDTO;
-import br.edu.ifrs.miguelzk.application.dto.UsuarioResponseDTO;
-import br.edu.ifrs.miguelzk.application.usecase.CreateAnimalUseCase;
 import br.edu.ifrs.miguelzk.application.usecase.UpdateAnimalUseCase;
 import br.edu.ifrs.miguelzk.domain.entities.Animal;
-import br.edu.ifrs.miguelzk.domain.entities.Usuario;
 import br.edu.ifrs.miguelzk.domain.repository.AnimalRepository;
-import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 

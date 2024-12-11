@@ -16,7 +16,7 @@ public class AtendimentoParaImunizanteResponseDTO {
 
   private Long id;
   private Date dataAtendimento;
-  private Set<UsuarioResponseDTO> usuariosDTO; // nomes de usuários
+  private Set<UsuarioSemRolesResponseDTO> usuariosDTO; // nomes de usuários
   private Set<MedVetResponseDTO> medVetsDTO; // nomes de medVets
 
 }

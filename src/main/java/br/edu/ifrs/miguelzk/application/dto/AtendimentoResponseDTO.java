@@ -33,7 +33,7 @@ public class AtendimentoResponseDTO {
 //  private List<DateJavaType> validacaoPelosTutores;
 
   private AnimalResponseDTO animal;
-  private Set<UsuarioResponseDTO> usuariosDTO; // nomes de usuários
+  private Set<UsuarioSemRolesResponseDTO> usuariosDTO; // nomes de usuários
   private Set<MedVetResponseDTO> medVetsDTO; // nomes de medVets
 
 }

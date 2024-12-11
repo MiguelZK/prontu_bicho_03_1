@@ -1,12 +1,7 @@
 package br.edu.ifrs.miguelzk.infrastructure.config;
 
-import br.edu.ifrs.miguelzk.application.dto.UsuarioResponseDTO;
-import br.edu.ifrs.miguelzk.domain.entities.Usuario;
-import jakarta.inject.Named;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.TypeMap;
 import org.modelmapper.spi.MappingContext;
 import org.hibernate.collection.spi.PersistentSet;
 import java.util.HashSet;

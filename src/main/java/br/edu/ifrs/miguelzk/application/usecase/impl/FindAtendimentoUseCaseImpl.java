@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import br.edu.ifrs.miguelzk.application.dto.AtendimentoTodosResponseDTO;
 import br.edu.ifrs.miguelzk.application.dto.MedVetResponseDTO;
-import br.edu.ifrs.miguelzk.application.dto.UsuarioResponseDTO;
+import br.edu.ifrs.miguelzk.application.dto.UsuarioSemRolesResponseDTO;
 import br.edu.ifrs.miguelzk.infrastructure.exception.ObjetoNaoEncontradoException;
 import org.modelmapper.ModelMapper;
 import br.edu.ifrs.miguelzk.application.usecase.FindAtendimentoUseCase;
@@ -34,7 +34,7 @@ public class FindAtendimentoUseCaseImpl implements FindAtendimentoUseCase {
     AtendimentoTodosResponseDTO atendimentoTodosResponseDTO = modelMapper
             .map(atendimento, AtendimentoTodosResponseDTO.class);
     atendimentoTodosResponseDTO.setUsuariosDTO(atendimento.getUsuarios().stream()
-            .map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+            .map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
             .collect(Collectors.toSet()));
     atendimentoTodosResponseDTO.setMedVetsDTO(atendimento.getMedVets().stream()
             .map(u -> modelMapper.map(u, MedVetResponseDTO.class))
@@ -51,7 +51,7 @@ public class FindAtendimentoUseCaseImpl implements FindAtendimentoUseCase {
       AtendimentoTodosResponseDTO atendimentoTodosResponse = modelMapper.map(atendimento, AtendimentoTodosResponseDTO.class);
       System.out.println(atendimento.getUsuarios());
       atendimentoTodosResponse.setUsuariosDTO(atendimento.getUsuarios().stream()
-              .map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+              .map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
               .collect(Collectors.toSet()));
       atendimentoTodosResponse.setMedVetsDTO(atendimento.getMedVets().stream()
               .map(u -> modelMapper.map(u, MedVetResponseDTO.class))

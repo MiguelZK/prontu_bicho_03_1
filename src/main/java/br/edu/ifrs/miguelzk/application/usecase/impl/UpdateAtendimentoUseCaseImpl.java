@@ -39,7 +39,7 @@ public class UpdateAtendimentoUseCaseImpl implements UpdateAtendimentoUseCase {
     @Override
     public AtendimentoResponseDTO execute(Long id, AtendimentoRequestDTO dto) {
         Atendimento atendimentoExistente = atendimentoRepository.findAtendimentoById(id);
-        if (atendimentoExistente == null && atendimentoExistente.getRegistroAtivo()) {
+        if (atendimentoExistente == null || !atendimentoExistente.getRegistroAtivo()) {
             throw new NotFoundException("Atendimento não encontrado");
         }
         // CRIA ATENDIMENTO ATUALIZADO
@@ -52,6 +52,7 @@ public class UpdateAtendimentoUseCaseImpl implements UpdateAtendimentoUseCase {
         if (animal == null) {
             throw new NotFoundException("Animal não encontrado");
         }
+        atendimento.setAnimal(animal);
 
         // VERIFICA USUARIOS E ATUALIZA
         Set<Usuario> usuarios = new HashSet<>();
@@ -83,11 +84,13 @@ public class UpdateAtendimentoUseCaseImpl implements UpdateAtendimentoUseCase {
         System.out.println("ATENDIMENTO ATUALIZADO: " + atendimentoExistente);
 
         // MANTÉM IMUNIZANTES NO REGISTRO DE ATENDIMENTO ATUALIZADO
-        atendimento.setImunizantes(atendimentoExistente.getImunizantes());
+//        atendimento.setImunizantes(atendimentoExistente.getImunizantes());
+        atendimento.getImunizantes().addAll(atendimentoExistente.getImunizantes());
 
         // ATUALIZA O REGISTRO
         Atendimento atendimentoSaved = atendimentoRepository.save(atendimento);
         System.out.println(atendimentoSaved);
+        atendimentoExistente.setAtendimentoSubstituto(atendimentoSaved);
         atualizaAtendimentoExistente(atendimentoExistente);
 //        System.out.println(ConverteEntityParaDTO.teste());
 
@@ -96,6 +99,7 @@ public class UpdateAtendimentoUseCaseImpl implements UpdateAtendimentoUseCase {
 
     public void atualizaAtendimentoExistente(Atendimento atendimento) {
         atendimento.setRegistroAtivo(false);
+        atendimento.getImunizantes().clear();
         atendimentoRepository.update(atendimento);
     }
 }

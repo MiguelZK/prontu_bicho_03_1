@@ -23,6 +23,8 @@ public class AtendimentoController {
     public Response create(@RequestBody AtendimentoRequestDTO request) {
         try {
             return Response.ok().entity(atendimentoService.createAtendimento(request)).build();
+        } catch (ObjetoNaoEncontradoException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         } catch (Exception e) {
             return Response.serverError().entity("CAUSA: " + e.getCause() + " MENSAGEM: " + e.getMessage()).build();
         }
@@ -61,7 +63,7 @@ public class AtendimentoController {
         try {
             return Response.ok().entity(atendimentoService.updateAtendimento(id, request)).build();
         } catch (ObjetoNaoEncontradoException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

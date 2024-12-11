@@ -14,6 +14,8 @@ import br.edu.ifrs.miguelzk.domain.repository.UsuarioRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.jboss.logging.Logger;
+import io.quarkus.runtime.StartupEvent;
+import jakarta.enterprise.event.Observes;
 
 @ApplicationScoped
 public class DataLoaderVinculos {
@@ -38,27 +40,28 @@ public class DataLoaderVinculos {
         this.medVetService = medVetService;
     }
 
-    @PostConstruct
-    public void loadData() {
+//    @PostConstruct
+    public void onStart(@Observes StartupEvent ev) {
+//    public void loadData() {
         // VERIFICAR SE OS DADOS JÁ FORAM INSERIDOS PARA EVITAR DUPLICIDADE
         if (usuarioRepository.contaUsuarios() == 0 && animalRepository.contaAnimais() == 0) {
             LOG.info("Carregando os dados iniciais no Dataloader...");
 
             // INSERIR USUÁRIOS
             UsuarioRequestDTO usuario1 = new UsuarioRequestDTO();
-            usuario1.setRole("admin, user");
+            usuario1.setRole("ADM, TUTOR");
             usuario1.setPassword("senha123");
             usuario1.setNomeCompleto("Miguel Zanona Krasner");
             usuario1.setUserName("miguel");
 
             UsuarioRequestDTO usuario2 = new UsuarioRequestDTO();
-            usuario2.setRole("user");
+            usuario2.setRole("TUTOR");
             usuario2.setPassword("senha456");
             usuario2.setNomeCompleto("Laura I Marcaccio Arce");
             usuario2.setUserName("laura");
 
             UsuarioRequestDTO usuario3 = new UsuarioRequestDTO();
-            usuario3.setRole("user");
+            usuario3.setRole("TUTOR");
             usuario3.setPassword("senha789");
             usuario3.setNomeCompleto("Caroline Teixeira Reinoso");
             usuario3.setUserName("carol");
@@ -86,7 +89,7 @@ public class DataLoaderVinculos {
 
             // INSERIR MEDVETS
             MedVetRequestDTO medVet1 = new MedVetRequestDTO();
-            medVet1.setRole("medVet, user");
+            medVet1.setRole("MEDVET, TUTOR");
             medVet1.setPassword("cantinho");
             medVet1.setNomeCompleto("Leticia Britto");
             medVet1.setUserName("leticia01");
@@ -94,7 +97,7 @@ public class DataLoaderVinculos {
             medVet1.setEspecialidade("Geral");
 
             MedVetRequestDTO medVet2 = new MedVetRequestDTO();
-            medVet2.setRole("medVet, user");
+            medVet2.setRole("MEDVET, TUTOR");
             medVet2.setPassword("pancrezyme");
             medVet2.setNomeCompleto("Guilherme Nutrólogo");
             medVet2.setUserName("guilherme01");

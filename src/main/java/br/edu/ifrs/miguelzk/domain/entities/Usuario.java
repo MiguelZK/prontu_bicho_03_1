@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import br.edu.ifrs.miguelzk.domain.enums.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -14,7 +15,6 @@ import io.quarkus.security.jpa.Roles;
 import io.quarkus.security.jpa.UserDefinition;
 import io.quarkus.security.jpa.Username;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.ToString;
 
@@ -39,7 +39,7 @@ public class Usuario extends PanacheEntityBase {
     private String password;
 
     @Roles
-    private String role;
+    private String roles;
 
     private String nomeCompleto;
 
@@ -59,11 +59,11 @@ public class Usuario extends PanacheEntityBase {
     @ManyToMany(mappedBy = "usuarios")
     private Set<Animal> animais = new HashSet<>();
 
-    public Usuario(String nomeCompleto, String userName, String password, String role) {
+    public Usuario(String nomeCompleto, String userName, String password, String roles) {
         this.nomeCompleto = nomeCompleto;
         this.userName = userName;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
         this.animais = new HashSet<>();
         this.vinculos = new HashSet<>();
     }
@@ -105,10 +105,10 @@ public class Usuario extends PanacheEntityBase {
         return Objects.hashCode(idUsuario);
     }
 
-    public static void add(String userName, String password, String role) {
+    public static void add(String userName, String password, String roles) {
         Usuario usuario = new Usuario();
         usuario.userName = userName;
         usuario.password = BcryptUtil.bcryptHash(password);
-        usuario.role = role;
+        usuario.roles = roles;
     }
 }

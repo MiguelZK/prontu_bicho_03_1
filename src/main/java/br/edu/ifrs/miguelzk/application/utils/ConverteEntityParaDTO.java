@@ -28,7 +28,7 @@ public final class ConverteEntityParaDTO {
                 .procedimentoRealizado(atendimento.getProcedimentoRealizado())
                 .tratamentoInstituido(atendimento.getTratamentoInstituido())
                 .observarProxConsulta(atendimento.getObservarProxConsulta())
-                .usuariosDTO(atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                .usuariosDTO(atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
                         .collect(Collectors.toSet()))
 //                        .medVetsDTO(atendimento.getMedVets().stream().map(m -> modelMapper.map(m, MedVetResponseDTO.class))
                 .medVetsDTO(atendimento.getMedVets().stream().map(medVet -> {
@@ -52,7 +52,7 @@ public final class ConverteEntityParaDTO {
         return AtendimentoParaImunizanteResponseDTO.builder()
                 .id(atendimento.getIdAtendimento())
                 .dataAtendimento(atendimento.getDataAtendimento())
-                .usuariosDTO(atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                .usuariosDTO(atendimento.getUsuarios().stream().map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
                         .collect(Collectors.toSet()))
                 .medVetsDTO(atendimento.getMedVets().stream().map(m -> modelMapper.map(m, MedVetResponseDTO.class))
 /*                .medVetsDTO(atendimento.getMedVets().stream().map(medVet -> {

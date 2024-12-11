@@ -9,7 +9,6 @@ import br.edu.ifrs.miguelzk.domain.entities.Vinculo;
 import br.edu.ifrs.miguelzk.domain.repository.AnimalRepository;
 import br.edu.ifrs.miguelzk.domain.repository.UsuarioRepository;
 import br.edu.ifrs.miguelzk.domain.repository.VinculoRepository;
-import br.edu.ifrs.miguelzk.infrastructure.persistence.DataLoader;
 import jakarta.ws.rs.NotFoundException;
 import org.jboss.logging.Logger;
 import org.modelmapper.ModelMapper;

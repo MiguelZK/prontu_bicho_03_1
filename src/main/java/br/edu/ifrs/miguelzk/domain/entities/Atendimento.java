@@ -41,6 +41,10 @@ public class Atendimento extends PanacheEntityBase {
     private Boolean registroAtivo;
 //    private List<DateJavaType> validacaoPelosTutores;
 
+    @OneToOne
+    @JoinColumn(name = "id_atendimento_substituto", referencedColumnName = "idAtendimento")
+    private Atendimento atendimentoSubstituto;
+
     @ToString.Exclude
     @ManyToOne
     @JsonBackReference
@@ -63,7 +67,7 @@ public class Atendimento extends PanacheEntityBase {
             inverseJoinColumns = {@JoinColumn(name = "crmv")})
     private Set<MedVet> medVets = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.MERGE/*, orphanRemoval = true*/)
     @JoinColumn(name = "atendimento")
     private Set<Imunizante> imunizantes = new HashSet<>();
 

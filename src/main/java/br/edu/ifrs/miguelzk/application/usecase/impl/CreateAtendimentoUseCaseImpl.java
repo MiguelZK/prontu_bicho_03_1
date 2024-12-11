@@ -4,7 +4,6 @@ import br.edu.ifrs.miguelzk.application.dto.*;
 import br.edu.ifrs.miguelzk.domain.entities.MedVet;
 import br.edu.ifrs.miguelzk.domain.entities.Usuario;
 import br.edu.ifrs.miguelzk.domain.repository.MedVetRepository;
-import br.edu.ifrs.miguelzk.infrastructure.persistence.DataLoader;
 import jakarta.ws.rs.NotFoundException;
 import org.jboss.logging.Logger;
 import org.modelmapper.ModelMapper;
@@ -89,7 +88,7 @@ public class CreateAtendimentoUseCaseImpl implements CreateAtendimentoUseCase {
 
         AtendimentoResponseDTO atendimentoResponseDTO = modelMapper.map(savedatendimento, AtendimentoResponseDTO.class);
         atendimentoResponseDTO.setUsuariosDTO(usuarios.stream().map(u ->
-                modelMapper.map(u, UsuarioResponseDTO.class)).collect(Collectors.toSet()));
+                modelMapper.map(u, UsuarioSemRolesResponseDTO.class)).collect(Collectors.toSet()));
         LOG.info("ATENDIMENTORESPONSEDTO: " + atendimentoResponseDTO);
 
         // ADICIONANDO ATENDIMENTO AO CADASTRO DO ANIMAL
@@ -98,10 +97,9 @@ public class CreateAtendimentoUseCaseImpl implements CreateAtendimentoUseCase {
         // CONVERTE USUARIOS E MEDVETS EM DTOS
         savedatendimento.getUsuarios().stream()
                 .map(usuario -> {
-                    UsuarioResponseDTO dto = new UsuarioResponseDTO();
+                    UsuarioSemRolesResponseDTO dto = new UsuarioSemRolesResponseDTO();
                     dto.setIdUsuario(usuario.getIdUsuario());
                     dto.setUserName(usuario.getUserName());
-                    dto.setRole(usuario.getRole());
                     dto.setNomeCompleto(usuario.getNomeCompleto());
                     return dto;
                 })
@@ -134,7 +132,7 @@ public class CreateAtendimentoUseCaseImpl implements CreateAtendimentoUseCase {
                 .procedimentoRealizado(savedatendimento.getProcedimentoRealizado())
                 .tratamentoInstituido(savedatendimento.getTratamentoInstituido())
                 .observarProxConsulta(savedatendimento.getObservarProxConsulta())
-                .usuariosDTO(usuarios.stream().map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                .usuariosDTO(usuarios.stream().map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
                         .collect(Collectors.toSet()))
                 .medVetsDTO(medVets.stream().map(m -> modelMapper.map(m, MedVetResponseDTO.class))
                         .collect(Collectors.toSet()))

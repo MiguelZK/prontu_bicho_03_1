@@ -53,7 +53,7 @@ public class FindAnimalUseCaseImpl implements FindAnimalUseCase {
         AnimalComColecoesResponseDTO animalComColecoesResponseDTO = modelMapper
                 .map(animal, AnimalComColecoesResponseDTO.class);
         animalComColecoesResponseDTO.setUsuarios(animal.getUsuarios().stream()
-                .map(u -> modelMapper.map(u, UsuarioResponseDTO.class))
+                .map(u -> modelMapper.map(u, UsuarioSemRolesResponseDTO.class))
                 .collect(Collectors.toSet()));
         animalComColecoesResponseDTO.setAtendimentos
                 (ConverteEntityParaDTO.atendimentosParaDTO(animal.getAtendimentos()
