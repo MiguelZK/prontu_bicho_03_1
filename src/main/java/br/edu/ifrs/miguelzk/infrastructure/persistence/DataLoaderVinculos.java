@@ -14,8 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
-import static br.edu.ifrs.miguelzk.domain.enums.TipoImunizante.VACINA;
-import static br.edu.ifrs.miguelzk.domain.enums.TipoImunizante.VERMIFUGO;
+import static br.edu.ifrs.miguelzk.domain.enums.TipoImunizante.*;
 
 @ApplicationScoped
 public class DataLoaderVinculos {
@@ -27,12 +26,13 @@ public class DataLoaderVinculos {
     private final UsuarioRepository usuarioRepository;
     private final AnimalRepository animalRepository;
     private final AtendimentoService atendimentoService;
+    private final ImunizanteService imunizanteService;
     private MedVetService medVetService;
 
     @jakarta.inject.Inject
     public DataLoaderVinculos(UsuarioService usuarioService, AnimalService animalService
             , VinculoService vinculoService, UsuarioRepository usuarioRepository, AnimalRepository animalRepository
-            , MedVetService medVetService, AtendimentoService atendimentoService) {
+            , MedVetService medVetService, AtendimentoService atendimentoService, ImunizanteService imunizanteService) {
         this.usuarioService = usuarioService;
         this.animalService = animalService;
         this.vinculoService = vinculoService;
@@ -40,6 +40,7 @@ public class DataLoaderVinculos {
         this.animalRepository = animalRepository;
         this.medVetService = medVetService;
         this.atendimentoService = atendimentoService;
+        this.imunizanteService = imunizanteService;
     }
 
     //    @PostConstruct
@@ -144,6 +145,11 @@ public class DataLoaderVinculos {
             vinculo4.setIdAnimal(3L);
             vinculo4.setIdUsuario(3L);
 
+            VinculoRequestDTO vinculo5 = new VinculoRequestDTO();
+            vinculo5.setNomeAnimal("Floquinho");
+            vinculo5.setIdAnimal(4L);
+            vinculo5.setIdUsuario(4L);
+
             vinculoService.create(vinculo1);
             vinculoService.create(vinculo2);
             vinculoService.create(vinculo3);
@@ -198,53 +204,57 @@ public class DataLoaderVinculos {
 
             // INSERIR IMUNIZANTES
             ImunizanteRequestDTO imunizante1 = new ImunizanteRequestDTO();
-            imunizante1.setNome("Antirrábica 1 Shenka";
+            imunizante1.setNome("Antirrábica 1 Shenka");
             imunizante1.setTipoImunizante(VACINA);
             imunizante1.setMarca("PetVacinas");
             imunizante1.setLote("123asd");
             imunizante1.setImportada(true);
             imunizante1.setDataFabricacao(new Date(2024, 03, 10));
             imunizante1.setDataValidade(new Date(2025, 12, 10));
-            imunizante1.setDataAplicacao(new Date(2024, 11, 15);
+            imunizante1.setDataAplicacao(new Date(2024, 11, 15));
             imunizante1.setIdAnimal(1L); // Shenka
             imunizante1.setIdAtendimento(2L);
             
             ImunizanteRequestDTO imunizante2 = new ImunizanteRequestDTO();
-            imunizante2.setNome("Antirrábica 1 Bidu";
+            imunizante2.setNome("Antirrábica 1 Bidu");
             imunizante2.setTipoImunizante(VACINA);
             imunizante2.setMarca("PetVacinas");
             imunizante2.setLote("123asd");
             imunizante2.setImportada(true);
             imunizante2.setDataFabricacao(new Date(2024, 03, 10));
             imunizante2.setDataValidade(new Date(2025, 12, 10));
-            imunizante2.setDataAplicacao(new Date(2024, 11, 12);
+            imunizante2.setDataAplicacao(new Date(2024, 11, 12));
             imunizante2.setIdAnimal(3L); // Bidu
             imunizante2.setIdAtendimento(1L);
             
             ImunizanteRequestDTO imunizante3 = new ImunizanteRequestDTO();
-            imunizante3.setNome("Vermígugo 1 Shenka";
+            imunizante3.setNome("Vermígugo 1 Shenka");
             imunizante3.setTipoImunizante(VERMIFUGO);
             imunizante3.setMarca("Canex Plus");
             imunizante3.setLote("456a32");
             imunizante3.setImportada(false);
             imunizante3.setDataFabricacao(new Date(2024, 03, 10));
             imunizante3.setDataValidade(new Date(2025, 12, 10));
-            imunizante3.setDataAplicacao(new Date(2024, 12, 15);
+            imunizante3.setDataAplicacao(new Date(2024, 12, 15));
             imunizante3.setIdAnimal(1L);
             imunizante3.setIdAtendimento(null);
             
             ImunizanteRequestDTO imunizante4 = new ImunizanteRequestDTO();
-            imunizante4.setNome("Antirrábica 1 Shenka";
-            imunizante4.setTipoImunizante(VACINA);
-            imunizante4.setMarca("PetVacinas");
-            imunizante4.setLote("123asd");
-            imunizante4.setImportada(true);
+            imunizante4.setNome("Antipulgas e carrapatos 1 Shenka");
+            imunizante4.setTipoImunizante(ANTIPULGASECARRAPATOS);
+            imunizante4.setMarca("Nexgard");
+            imunizante4.setLote("654s4");
+            imunizante4.setImportada(false);
             imunizante4.setDataFabricacao(new Date(2024, 03, 10));
             imunizante4.setDataValidade(new Date(2025, 12, 10));
-            imunizante4.setDataAplicacao(new Date(2024, 11, 12);
+            imunizante4.setDataAplicacao(new Date(2024, 11, 12));
             imunizante4.setIdAnimal(1L);
-            imunizante4.setIdAtendimento(1L);
-            
+            imunizante4.setIdAtendimento(2L);
+
+            imunizanteService.create(imunizante1);
+            imunizanteService.create(imunizante2);
+            imunizanteService.create(imunizante3);
+            imunizanteService.create(imunizante4);
 
 //            LOG.info("Usuario 1: " + usuario1);
 

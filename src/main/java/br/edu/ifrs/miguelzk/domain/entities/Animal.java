@@ -61,7 +61,6 @@ public class Animal extends PanacheEntityBase {
     @Column(nullable = false)
     private String descricao;*/
 
-
     @Enumerated(EnumType.STRING)
     private PorteCachorro porteCachorro;
 

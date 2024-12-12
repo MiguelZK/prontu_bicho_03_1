@@ -88,9 +88,9 @@ public class UpdateAtendimentoUseCaseImpl implements UpdateAtendimentoUseCase {
         atendimento.getImunizantes().addAll(atendimentoExistente.getImunizantes());
 
         // ATUALIZA O REGISTRO
+        atendimento.setAtendimentoSubstituido(atendimentoExistente);
         Atendimento atendimentoSaved = atendimentoRepository.save(atendimento);
         System.out.println(atendimentoSaved);
-        atendimentoExistente.setAtendimentoSubstituto(atendimentoSaved);
         atualizaAtendimentoExistente(atendimentoExistente);
 //        System.out.println(ConverteEntityParaDTO.teste());
 

@@ -42,8 +42,8 @@ public class Atendimento extends PanacheEntityBase {
 //    private List<DateJavaType> validacaoPelosTutores;
 
     @OneToOne
-    @JoinColumn(name = "id_atendimento_substituto", referencedColumnName = "idAtendimento")
-    private Atendimento atendimentoSubstituto;
+    @JoinColumn(name = "id_atendimento_substituido", referencedColumnName = "idAtendimento")
+    private Atendimento atendimentoSubstituido;
 
     @ToString.Exclude
     @ManyToOne
