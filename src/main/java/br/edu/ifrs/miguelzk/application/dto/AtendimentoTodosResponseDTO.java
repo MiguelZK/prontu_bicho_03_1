@@ -30,5 +30,5 @@ public class AtendimentoTodosResponseDTO {
   private AnimalResponseDTO animal;
   private Set<UsuarioSemRolesResponseDTO> usuariosDTO; // nomes de usuários
   private Set<MedVetResponseDTO> medVetsDTO; // nomes de medVets
-
+  private Set<ImunizanteResponseDTO> imunizantesDTO;
 }

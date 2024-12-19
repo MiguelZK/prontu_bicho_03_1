@@ -72,7 +72,8 @@ public class ImunizanteController {
     @DELETE
 //  @RolesAllowed("admin")
     @PermitAll
-    public Response deleteImunizanteById(Long id) {
+    @Path("/{id}")
+    public Response deleteImunizanteById(@PathParam("id") Long id) {
         try {
             imunizanteService.deleteImunizanteById(id);
             return Response.ok().build();

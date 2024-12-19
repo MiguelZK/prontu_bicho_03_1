@@ -157,7 +157,7 @@ public class DataLoaderVinculos {
 
             // INSERIR ATENDIMENTOS
             AtendimentoRequestDTO atendimento1 = new AtendimentoRequestDTO();
-            atendimento1.setDataAtendimento(new Date(2024, 11,  12));
+            atendimento1.setDataAtendimento(new Date((2024-1900), 11,  12));
             atendimento1.setRelatoTutor("Ele não come há uns dias");
             atendimento1.setExameClinico("Relato do exame clínico 1");
             atendimento1.setAvaliacaoExames("Avaliação dos exames 1");
@@ -171,7 +171,7 @@ public class DataLoaderVinculos {
             atendimento1.setCrmvMedVets(new HashSet<Long>(Arrays.asList(1234L))); // Letícia
 
             AtendimentoRequestDTO atendimento2 = new AtendimentoRequestDTO();
-            atendimento2.setDataAtendimento(new Date(2024, 11,  15));
+            atendimento2.setDataAtendimento(new Date((2024-1900), 11,  15));
             atendimento2.setRelatoTutor("Se coça muito");
             atendimento2.setExameClinico("Exame clínico 2");
             atendimento2.setAvaliacaoExames("Avaliação exames 2");
@@ -185,7 +185,7 @@ public class DataLoaderVinculos {
             atendimento2.setCrmvMedVets(new HashSet<Long>(Arrays.asList(1234L, 4567L))); // Letícia e Guilherme
 
             AtendimentoRequestDTO atendimento3 = new AtendimentoRequestDTO();
-            atendimento3.setDataAtendimento(new Date(2024, 11,  20));
+            atendimento3.setDataAtendimento(new Date((2024-1900), 11,  20));
             atendimento3.setRelatoTutor("Ele não come há uns dias");
             atendimento3.setExameClinico("Relato do exame clínico aqui");
             atendimento3.setAvaliacaoExames("Avaliação dos exames aqui");
@@ -209,9 +209,9 @@ public class DataLoaderVinculos {
             imunizante1.setMarca("PetVacinas");
             imunizante1.setLote("123asd");
             imunizante1.setImportada(true);
-            imunizante1.setDataFabricacao(new Date(2024, 03, 10));
-            imunizante1.setDataValidade(new Date(2025, 12, 10));
-            imunizante1.setDataAplicacao(new Date(2024, 11, 15));
+            imunizante1.setDataFabricacao(new Date((2024-1900), 03, 10));
+            imunizante1.setDataValidade(new Date((2025-1900), 12, 10));
+            imunizante1.setDataAplicacao(new Date((2024-1900), 11, 15));
             imunizante1.setIdAnimal(1L); // Shenka
             imunizante1.setIdAtendimento(2L);
             
@@ -221,9 +221,9 @@ public class DataLoaderVinculos {
             imunizante2.setMarca("PetVacinas");
             imunizante2.setLote("123asd");
             imunizante2.setImportada(true);
-            imunizante2.setDataFabricacao(new Date(2024, 03, 10));
-            imunizante2.setDataValidade(new Date(2025, 12, 10));
-            imunizante2.setDataAplicacao(new Date(2024, 11, 12));
+            imunizante2.setDataFabricacao(new Date((2024-1900), 03, 10));
+            imunizante2.setDataValidade(new Date((2025-1900), 12, 10));
+            imunizante2.setDataAplicacao(new Date((2024-1900), 11, 12));
             imunizante2.setIdAnimal(3L); // Bidu
             imunizante2.setIdAtendimento(1L);
             
@@ -233,9 +233,9 @@ public class DataLoaderVinculos {
             imunizante3.setMarca("Canex Plus");
             imunizante3.setLote("456a32");
             imunizante3.setImportada(false);
-            imunizante3.setDataFabricacao(new Date(2024, 03, 10));
-            imunizante3.setDataValidade(new Date(2025, 12, 10));
-            imunizante3.setDataAplicacao(new Date(2024, 12, 15));
+            imunizante3.setDataFabricacao(new Date((2024-1900), 03, 10));
+            imunizante3.setDataValidade(new Date((2025-1900), 12, 10));
+            imunizante3.setDataAplicacao(new Date((2024-1900), 12, 15));
             imunizante3.setIdAnimal(1L);
             imunizante3.setIdAtendimento(null);
             
@@ -245,9 +245,9 @@ public class DataLoaderVinculos {
             imunizante4.setMarca("Nexgard");
             imunizante4.setLote("654s4");
             imunizante4.setImportada(false);
-            imunizante4.setDataFabricacao(new Date(2024, 03, 10));
-            imunizante4.setDataValidade(new Date(2025, 12, 10));
-            imunizante4.setDataAplicacao(new Date(2024, 11, 12));
+            imunizante4.setDataFabricacao(new Date((2024-1900), 03, 10));
+            imunizante4.setDataValidade(new Date((2025-1900), 12, 10));
+            imunizante4.setDataAplicacao(new Date((2024-1900), 11, 12));
             imunizante4.setIdAnimal(1L);
             imunizante4.setIdAtendimento(2L);
 
